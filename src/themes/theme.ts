@@ -5,10 +5,10 @@ export default createTheme({
   palette: {
     mode: 'dark',
     primary: {
-      main: teal[200]
+      main: teal[200],
     },
     secondary: {
-      main: purple[200]
-    }
-  }
+      main: purple[200],
+    },
+  },
 });

@@ -1,5 +1,9 @@
 import { Quantity, BaseQuantity, quantitySearchKey } from '../core/quantity';
-import { parenthesize, deparenthesize, makeNeatProductFromSortedTerms } from '../core/util';
+import {
+  parenthesize,
+  deparenthesize,
+  makeNeatProductFromSortedTerms,
+} from '../core/util';
 
 const Q = Quantity.productQuantity;
 
@@ -128,7 +132,7 @@ export const QUANTITIES: Quantity[] = [
 
 export const QUANTITY: { [name: string]: Quantity } = {};
 
-QUANTITIES.forEach(quantity => QUANTITY[quantity.name] = quantity);
+QUANTITIES.forEach((quantity) => (QUANTITY[quantity.name] = quantity));
 
 export const BASE_QUANTITIES = {
   [BaseQuantity.Time]: QUANTITY.time,
@@ -139,29 +143,39 @@ export const BASE_QUANTITIES = {
   [BaseQuantity.AmountOfSubstance]: QUANTITY.amountOfSubstance,
   [BaseQuantity.LuminousIntensity]: QUANTITY.luminousIntensity,
   [BaseQuantity.PlaneAngle]: QUANTITY.planeAngle,
-  [BaseQuantity.SolidAngle]: QUANTITY.solidAngle
+  [BaseQuantity.SolidAngle]: QUANTITY.solidAngle,
 };
 
 export const SCALAR_QUANTITY = QUANTITY.scalar;
 SCALAR_QUANTITY.construction = { numerators: [], denominators: [] };
 
-const QUANTITY_KEYS = Object.fromEntries(QUANTITIES.map(quantity => [quantitySearchKey(quantity), quantity]));
+const QUANTITY_KEYS = Object.fromEntries(
+  QUANTITIES.map((quantity) => [quantitySearchKey(quantity), quantity])
+);
 
-export const makeQuantity = (numerator: Quantity[],
-                             denominator: Quantity[]): Quantity => {
-  const numerator_names = [...numerator
-    .map(quantity => deparenthesize(quantity.name.split('/')[0]).split('*'))
-    .flat().filter(x => x),
-  ...denominator
-    .map(quantity => deparenthesize(quantity.name.split('/')[1]).split('*'))
-    .flat().filter(x => x)
+export const makeQuantity = (
+  numerator: Quantity[],
+  denominator: Quantity[]
+): Quantity => {
+  const numerator_names = [
+    ...numerator
+      .map((quantity) => deparenthesize(quantity.name.split('/')[0]).split('*'))
+      .flat()
+      .filter((x) => x),
+    ...denominator
+      .map((quantity) => deparenthesize(quantity.name.split('/')[1]).split('*'))
+      .flat()
+      .filter((x) => x),
   ];
-  const denominator_names = [...numerator
-    .map(quantity => deparenthesize(quantity.name.split('/')[1]).split('*'))
-    .flat().filter(x => x),
-  ...denominator
-    .map(quantity => deparenthesize(quantity.name.split('/')[0]).split('*'))
-    .flat().filter(x => x)
+  const denominator_names = [
+    ...numerator
+      .map((quantity) => deparenthesize(quantity.name.split('/')[1]).split('*'))
+      .flat()
+      .filter((x) => x),
+    ...denominator
+      .map((quantity) => deparenthesize(quantity.name.split('/')[0]).split('*'))
+      .flat()
+      .filter((x) => x),
   ];
   numerator_names.sort();
   let name = makeNeatProductFromSortedTerms(numerator_names);
@@ -169,7 +183,9 @@ export const makeQuantity = (numerator: Quantity[],
   if (denominator_names.length > 0) {
     denominator_names.sort();
     if (!name) name = '1';
-    name = `${name}/${parenthesize(makeNeatProductFromSortedTerms(denominator_names))}`;
+    name = `${name}/${parenthesize(
+      makeNeatProductFromSortedTerms(denominator_names)
+    )}`;
   }
 
   const derived = Quantity.derivedQuantity(name, numerator, denominator);

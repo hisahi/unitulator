@@ -1,5 +1,12 @@
 import { Quantity, isEquivalentQuantity } from './quantity';
-import { Fraction, makeFraction, multiplyFraction, divideFraction, divideScales, fractionToNumber } from './fraction';
+import {
+  Fraction,
+  makeFraction,
+  multiplyFraction,
+  divideFraction,
+  divideScales,
+  fractionToNumber,
+} from './fraction';
 import { parenthesize, residualSplit, shallowCopy } from './util';
 import { Prefix } from './prefix';
 import { PREFIX, INVERSE_PREFIX, PRODUCT_PREFIX } from '../data/prefix';
@@ -17,28 +24,34 @@ import { makeQuantity, SCALAR_QUANTITY } from '../data/quantity';
    etc. */
 
 export interface UnitTokenLiteral {
-  prefix?: string
-  unit: string
-  symbol?: string
-  power?: bigint
+  prefix?: string;
+  unit: string;
+  symbol?: string;
+  power?: bigint;
 }
 
 export interface UnitTokenProduct {
-  product: UnitTokenLiteral[]
+  product: UnitTokenLiteral[];
 }
 
 export type UnitTokenLiteralOrProduct = UnitTokenLiteral | UnitTokenProduct;
 
 export interface UnitTokenFraction {
-  numerator: UnitTokenLiteralOrProduct
-  denominator: UnitTokenLiteralOrProduct
+  numerator: UnitTokenLiteralOrProduct;
+  denominator: UnitTokenLiteralOrProduct;
 }
 
 export type UnitToken = UnitTokenLiteral | UnitTokenProduct | UnitTokenFraction;
 
-export const isUnitTokenLiteral = (token: UnitToken): token is UnitTokenLiteral => 'unit' in token;
-export const isUnitTokenProduct = (token: UnitToken): token is UnitTokenProduct => 'product' in token;
-export const isUnitTokenFraction = (token: UnitToken): token is UnitTokenFraction => 'numerator' in token;
+export const isUnitTokenLiteral = (
+  token: UnitToken
+): token is UnitTokenLiteral => 'unit' in token;
+export const isUnitTokenProduct = (
+  token: UnitToken
+): token is UnitTokenProduct => 'product' in token;
+export const isUnitTokenFraction = (
+  token: UnitToken
+): token is UnitTokenFraction => 'numerator' in token;
 
 // creates a unique name for a unit out of the token construction
 /* unitName format: English words [A-Z] per unit.
@@ -55,9 +68,11 @@ const constructionToName = (token: UnitToken): string => {
     const numeratorName = constructionToName(numerator);
     const denominatorName = constructionToName(denominator);
     return `${numeratorName}/${denominatorName}`;
-  } if (isUnitTokenProduct(token)) {
+  }
+  if (isUnitTokenProduct(token)) {
     return token.product.map(constructionToName).join('*');
-  } if (isUnitTokenLiteral(token)) {
+  }
+  if (isUnitTokenLiteral(token)) {
     const { prefix, unit, power } = token;
     const prefixName = prefix ? `${PREFIX[prefix].name}-` : '';
     const powerName = power && power > 1 ? `^${power.toString()}` : '';
@@ -73,10 +88,16 @@ const constructionToSymbol = (token: UnitToken): string => {
     const { numerator, denominator } = token;
     const numeratorSymbol = constructionToSymbol(numerator) || '1';
     const denominatorSymbol = constructionToSymbol(denominator);
-    return `${numeratorSymbol}/${denominatorSymbol.includes('*') ? `(${denominatorSymbol})` : denominatorSymbol}`;
-  } if (isUnitTokenProduct(token)) {
+    return `${numeratorSymbol}/${
+      denominatorSymbol.includes('*')
+        ? `(${denominatorSymbol})`
+        : denominatorSymbol
+    }`;
+  }
+  if (isUnitTokenProduct(token)) {
     return token.product.map(constructionToSymbol).join('*');
-  } if (isUnitTokenLiteral(token)) {
+  }
+  if (isUnitTokenLiteral(token)) {
     const { prefix, symbol, power } = token;
     const prefixSymbol = prefix ? PREFIX[prefix].symbol : '';
     const powerSymbol = power && power > 1 ? `^${power.toString()}` : '';
@@ -86,7 +107,9 @@ const constructionToSymbol = (token: UnitToken): string => {
 };
 
 // constructs an UnitToken, literal or product, out of a list of literals, combining duplicates into powers
-const makeProduct = (partsOriginal: UnitTokenLiteral[]): UnitTokenLiteralOrProduct => {
+const makeProduct = (
+  partsOriginal: UnitTokenLiteral[]
+): UnitTokenLiteralOrProduct => {
   if (partsOriginal.length === 0) return SCALAR_TOKEN;
 
   const parts: UnitTokenLiteral[] = [];
@@ -97,7 +120,7 @@ const makeProduct = (partsOriginal: UnitTokenLiteral[]): UnitTokenLiteralOrProdu
     const literal = literals[newPart.unit];
     if (literal) {
       // duplicate; combine powers
-      literal.power = (literal.power || BigInt(1)) + (part.power || BigInt(1));
+      literal.power = (literal.power ?? 1n) + (part.power ?? 1n);
     } else {
       // new: add to list
       literals[newPart.unit] = newPart;
@@ -112,13 +135,19 @@ const makeProduct = (partsOriginal: UnitTokenLiteral[]): UnitTokenLiteralOrProdu
   return { product: parts };
 };
 
-const dumpConstruction = (token: UnitToken, numeratorTokens: UnitTokenLiteral[], denominatorTokens: UnitTokenLiteral[]): void => {
+const dumpConstruction = (
+  token: UnitToken,
+  numeratorTokens: UnitTokenLiteral[],
+  denominatorTokens: UnitTokenLiteral[]
+): void => {
   if (isUnitTokenFraction(token)) {
     // swap num and denom for denominator, since a/(b/c) = a*c/b
     dumpConstruction(token.numerator, numeratorTokens, denominatorTokens);
     dumpConstruction(token.denominator, denominatorTokens, numeratorTokens);
   } else if (isUnitTokenProduct(token)) {
-    token.product.forEach(unit => dumpConstruction(unit, numeratorTokens, denominatorTokens));
+    token.product.forEach((unit) =>
+      dumpConstruction(unit, numeratorTokens, denominatorTokens)
+    );
   } else if (isUnitTokenLiteral(token)) {
     numeratorTokens.push(token);
   } else {
@@ -130,10 +159,9 @@ const simplifyPrefixesWithin = (tokens: UnitTokenLiteral[]) => {
   // simplify prefixes within the list of tokens
   const prefixesByPower: { [powerKey: string]: UnitTokenLiteral[] } = {};
 
-  nextToken:
-  for (const token of tokens) {
+  nextToken: for (const token of tokens) {
     if (token.prefix) {
-      const powerKey = token.power?.toString() || '1';
+      const powerKey = token.power?.toString() ?? '1';
       let existingList = prefixesByPower[powerKey];
       if (!existingList) {
         existingList = [];
@@ -160,16 +188,20 @@ const simplifyPrefixesWithin = (tokens: UnitTokenLiteral[]) => {
   }
 };
 
-const simplifyPrefixes = (numerators: UnitTokenLiteral[], denominators: UnitTokenLiteral[]) => {
+const simplifyPrefixes = (
+  numerators: UnitTokenLiteral[],
+  denominators: UnitTokenLiteral[]
+) => {
   // simplify prefixes within the list(s) of tokens
   simplifyPrefixesWithin(numerators);
   simplifyPrefixesWithin(denominators);
 
   // then cancel out opposing prefixes between the two lists
-  const numeratorPrefixesByPower: { [powerKey: string]: UnitTokenLiteral[] } = {};
+  const numeratorPrefixesByPower: { [powerKey: string]: UnitTokenLiteral[] } =
+    {};
   for (const token of numerators) {
     if (token.prefix) {
-      const powerKey = token.power?.toString() || '1';
+      const powerKey = token.power?.toString() ?? '1';
       let existingList = numeratorPrefixesByPower[powerKey];
       if (!existingList) {
         existingList = [];
@@ -179,13 +211,17 @@ const simplifyPrefixes = (numerators: UnitTokenLiteral[], denominators: UnitToke
     }
   }
 
-  nextToken:
-  for (const token of denominators) {
+  nextToken: for (const token of denominators) {
     if (token.prefix) {
       const inverse = INVERSE_PREFIX[token.prefix];
       if (inverse) {
-        const existingList = numeratorPrefixesByPower[token.power?.toString() || '1'];
-        for (let index = 0; existingList && index < existingList.length; ++index) {
+        const existingList =
+          numeratorPrefixesByPower[token.power?.toString() ?? '1'];
+        for (
+          let index = 0;
+          existingList && index < existingList.length;
+          ++index
+        ) {
           const existing = existingList[index];
           const product = PRODUCT_PREFIX[existing.prefix!][inverse];
           if (product !== undefined) {
@@ -207,12 +243,12 @@ const simplifyPrefixes = (numerators: UnitTokenLiteral[], denominators: UnitToke
 const combinePowers = (tokens: UnitTokenLiteral[]) => {
   const tokensByName: { [name: string]: UnitTokenLiteral } = {};
 
-  for (let index = 0; index < tokens.length;) {
+  for (let index = 0; index < tokens.length; ) {
     const token = tokens[index];
     const name = (token.prefix ? `${token.prefix}-` : '') + token.unit;
     const duplicate = tokensByName[name];
     if (duplicate) {
-      duplicate.power = duplicate.power || BigInt(1);
+      duplicate.power = duplicate.power ?? 1n;
       ++duplicate.power;
       tokens.splice(index, 1);
     } else {
@@ -222,12 +258,17 @@ const combinePowers = (tokens: UnitTokenLiteral[]) => {
   }
 };
 
-const cancelTokens = (numerators: UnitTokenLiteral[], denominators: UnitTokenLiteral[]) => {
+const cancelTokens = (
+  numerators: UnitTokenLiteral[],
+  denominators: UnitTokenLiteral[]
+) => {
   combinePowers(numerators);
   combinePowers(denominators);
 
   // cancel out units from both sides (including in powers)
-  const numeratorsByName: { [name: string]: Array<[number, UnitTokenLiteral]> } = {};
+  const numeratorsByName: {
+    [name: string]: Array<[number, UnitTokenLiteral]>;
+  } = {};
 
   for (let index = 0; index < numerators.length; ++index) {
     const token = numerators[index];
@@ -236,19 +277,22 @@ const cancelTokens = (numerators: UnitTokenLiteral[], denominators: UnitTokenLit
     numeratorsByName[name].push([index, token]);
   }
 
-  nextDenominator:
-  for (let index = 0; index < denominators.length;) {
+  nextDenominator: for (let index = 0; index < denominators.length; ) {
     const token = denominators[index];
     const name = (token.prefix ? `${token.prefix}-` : '') + token.unit;
     const candidates = numeratorsByName[name];
     if (candidates) {
-      for (let candidateIndex = 0; candidateIndex < candidates.length;) {
+      for (let candidateIndex = 0; candidateIndex < candidates.length; ) {
         const [numeratorIndex, candidate] = candidates[candidateIndex];
-        const candidatePower = candidate.power || BigInt(1);
-        const tokenPower = token.power || BigInt(1);
+        const candidatePower = candidate.power ?? 1n;
+        const tokenPower = token.power ?? 1n;
 
-        if (candidatePower > tokenPower) { candidate.power = candidatePower - tokenPower; }
-        if (candidatePower < tokenPower) { token.power = tokenPower - candidatePower; }
+        if (candidatePower > tokenPower) {
+          candidate.power = candidatePower - tokenPower;
+        }
+        if (candidatePower < tokenPower) {
+          token.power = tokenPower - candidatePower;
+        }
 
         if (candidatePower <= tokenPower) {
           candidates.splice(candidateIndex, 1);
@@ -267,15 +311,26 @@ const cancelTokens = (numerators: UnitTokenLiteral[], denominators: UnitTokenLit
   }
 };
 
-const makeConstruction = (numerators: Unit[], denominators: Unit[]): UnitToken => {
+const makeConstruction = (
+  numerators: Unit[],
+  denominators: Unit[]
+): UnitToken => {
   let numeratorTokens: UnitTokenLiteral[] = [];
   let denominatorTokens: UnitTokenLiteral[] = [];
 
-  numerators.forEach(unit => dumpConstruction(unit.construction, numeratorTokens, denominatorTokens));
-  denominators.forEach(unit => dumpConstruction(unit.construction, denominatorTokens, numeratorTokens));
+  numerators.forEach((unit) =>
+    dumpConstruction(unit.construction, numeratorTokens, denominatorTokens)
+  );
+  denominators.forEach((unit) =>
+    dumpConstruction(unit.construction, denominatorTokens, numeratorTokens)
+  );
 
-  numeratorTokens = numeratorTokens.filter(token => token.unit).map(shallowCopy<UnitTokenLiteral>);
-  denominatorTokens = denominatorTokens.filter(token => token.unit).map(shallowCopy<UnitTokenLiteral>);
+  numeratorTokens = numeratorTokens
+    .filter((token) => token.unit)
+    .map(shallowCopy<UnitTokenLiteral>);
+  denominatorTokens = denominatorTokens
+    .filter((token) => token.unit)
+    .map(shallowCopy<UnitTokenLiteral>);
 
   simplifyPrefixes(numeratorTokens, denominatorTokens);
   cancelTokens(numeratorTokens, denominatorTokens);
@@ -284,7 +339,10 @@ const makeConstruction = (numerators: Unit[], denominators: Unit[]): UnitToken =
     return makeProduct(numeratorTokens);
   }
 
-  return { numerator: makeProduct(numeratorTokens), denominator: makeProduct(denominatorTokens) };
+  return {
+    numerator: makeProduct(numeratorTokens),
+    denominator: makeProduct(denominatorTokens),
+  };
 };
 
 const parseUnitTokenProductFromLiteral = (name: string): UnitTokenLiteral => {
@@ -312,7 +370,8 @@ const parseUnitTokenProductFromLiteral = (name: string): UnitTokenLiteral => {
   return { unit: name, prefix: prefix ?? undefined, power: power ?? undefined };
 };
 
-const parseUnitTokenProductFromName = (name: string): UnitTokenLiteral[] => name.split('*').map(parseUnitTokenProductFromLiteral);
+const parseUnitTokenProductFromName = (name: string): UnitTokenLiteral[] =>
+  name.split('*').map(parseUnitTokenProductFromLiteral);
 
 export const parseUnitTokenFromName = (name: string): UnitToken => {
   if (name.includes('/')) {
@@ -328,7 +387,10 @@ export const parseUnitTokenFromName = (name: string): UnitToken => {
       return makeProduct(numeratorTokens);
     }
 
-    return { numerator: makeProduct(numeratorTokens), denominator: makeProduct(denominatorTokens) };
+    return {
+      numerator: makeProduct(numeratorTokens),
+      denominator: makeProduct(denominatorTokens),
+    };
   }
 
   const tokens = parseUnitTokenProductFromName(name);
@@ -336,7 +398,10 @@ export const parseUnitTokenFromName = (name: string): UnitToken => {
   return makeProduct(tokens);
 };
 
-export const unitTokenToUnit = (token: UnitToken, unitTable: { [key: string]: Unit }): Unit | null => {
+export const unitTokenToUnit = (
+  token: UnitToken,
+  unitTable: { [key: string]: Unit }
+): Unit | null => {
   if (isUnitTokenFraction(token)) {
     const { numerator, denominator } = token;
     const numeratorUnit = unitTokenToUnit(numerator, unitTable);
@@ -344,7 +409,8 @@ export const unitTokenToUnit = (token: UnitToken, unitTable: { [key: string]: Un
     const denominatorUnit = unitTokenToUnit(denominator, unitTable);
     if (denominatorUnit === null) return null;
     return Unit.derivedUnit([numeratorUnit], [denominatorUnit]);
-  } if (isUnitTokenProduct(token)) {
+  }
+  if (isUnitTokenProduct(token)) {
     const { product } = token;
     const units = [];
     for (const token of product) {
@@ -353,7 +419,8 @@ export const unitTokenToUnit = (token: UnitToken, unitTable: { [key: string]: Un
       units.push(unit);
     }
     return Unit.derivedUnit(units, []);
-  } if (isUnitTokenLiteral(token)) {
+  }
+  if (isUnitTokenLiteral(token)) {
     const { prefix, unit, power } = token;
     let result = unitTable[unit];
     if (!result) return null;
@@ -370,12 +437,16 @@ export const unitTokenToUnit = (token: UnitToken, unitTable: { [key: string]: Un
   throw new Error('unrecognized token type');
 };
 
-export const parseUnitFromName = (name: string, unitTable: { [key: string]: Unit }): Unit | null => unitTokenToUnit(parseUnitTokenFromName(name), unitTable);
+export const parseUnitFromName = (
+  name: string,
+  unitTable: { [key: string]: Unit }
+): Unit | null => unitTokenToUnit(parseUnitTokenFromName(name), unitTable);
 
-const ONE_ONE = makeFraction(BigInt(1), BigInt(1));
+const ONE_ONE = makeFraction(1n, 1n);
 
 // product of N fractions
-const productFraction = (numbers: Fraction[]): Fraction => numbers.reduce(multiplyFraction, ONE_ONE);
+const productFraction = (numbers: Fraction[]): Fraction =>
+  numbers.reduce(multiplyFraction, ONE_ONE);
 
 export class Unit {
   // name = localizable unique name, format described above.
@@ -385,13 +456,14 @@ export class Unit {
   // scaleConstant = additional floating-point factor (e.g. PI for degrees/radians)
   // construction = a tree of how the unit is laid out
 
-  constructor(public name: string,
-              public symbol: string,
-              public quantity: Quantity,
-              public scale: Fraction,
-              public scaleConstant: number,
-              public construction: UnitToken) {
-  }
+  constructor(
+    public name: string,
+    public symbol: string,
+    public quantity: Quantity,
+    public scale: Fraction,
+    public scaleConstant: number,
+    public construction: UnitToken
+  ) {}
 
   // basic unit with name, symbol, quantity and scale 1 (basic unit for that quantity)
   static baseUnit(name: string, symbol: string, quantity: Quantity): Unit {
@@ -401,34 +473,52 @@ export class Unit {
   // base unit with an SI prefix
   static prefixUnit(prefix: Prefix, unit: Unit): Unit {
     if (unit.name.match(/[*/()-]/) != null) {
-      throw new Error('cannot stack prefixes or add prefixes to non-basic units');
+      throw new Error(
+        'cannot stack prefixes or add prefixes to non-basic units'
+      );
     }
-    return new Unit(`${prefix.name}-${unit.name}`,
+    return new Unit(
+      `${prefix.name}-${unit.name}`,
       prefix.symbol + parenthesize(unit.symbol),
       unit.quantity,
       multiplyFraction(unit.scale, prefix.factor),
       unit.scaleConstant,
-      { unit: unit.name, symbol: unit.symbol, prefix: prefix.name });
+      { unit: unit.name, symbol: unit.symbol, prefix: prefix.name }
+    );
   }
 
   // base unit with scaling (e.g. feet for meters, degrees for radians)
-  static scaledUnit(name: string, symbol: string, unit: Unit, scale: Fraction, scaleConstant: number): Unit {
-    return new Unit(name, symbol, unit.quantity,
+  static scaledUnit(
+    name: string,
+    symbol: string,
+    unit: Unit,
+    scale: Fraction,
+    scaleConstant: number
+  ): Unit {
+    return new Unit(
+      name,
+      symbol,
+      unit.quantity,
       multiplyFraction(unit.scale, scale),
       scaleConstant,
-      { unit: name, symbol });
+      { unit: name, symbol }
+    );
   }
 
   // derived unit out of a "fraction" of units
-  static derivedUnitWithConstruction(symbol: string,
-                                     name: string,
-                                     quantity: Quantity | undefined,
-                                     numerators: Unit[],
-                                     denominators: Unit[],
-                                     construction: UnitToken): Unit {
+  static derivedUnitWithConstruction(
+    symbol: string,
+    name: string,
+    quantity: Quantity | undefined,
+    numerators: Unit[],
+    denominators: Unit[],
+    construction: UnitToken
+  ): Unit {
     // TODO better simplification.
-    const automaticQuantity = makeQuantity(numerators.map(unit => unit.quantity),
-      denominators.map(unit => unit.quantity));
+    const automaticQuantity = makeQuantity(
+      numerators.map((unit) => unit.quantity),
+      denominators.map((unit) => unit.quantity)
+    );
     if (quantity != null) {
       if (!isEquivalentQuantity(quantity, automaticQuantity)) {
         throw new Error('quantity mismatch!');
@@ -436,45 +526,75 @@ export class Unit {
     } else {
       quantity = automaticQuantity;
     }
-    return new Unit(name, symbol, quantity,
-      divideFraction(productFraction(numerators.map(unit => unit.scale)),
-        productFraction(denominators.map(unit => unit.scale))),
-      divideScales(numerators.map(unit => unit.scaleConstant),
-        denominators.map(unit => unit.scaleConstant)),
-      construction);
+    return new Unit(
+      name,
+      symbol,
+      quantity,
+      divideFraction(
+        productFraction(numerators.map((unit) => unit.scale)),
+        productFraction(denominators.map((unit) => unit.scale))
+      ),
+      divideScales(
+        numerators.map((unit) => unit.scaleConstant),
+        denominators.map((unit) => unit.scaleConstant)
+      ),
+      construction
+    );
   }
 
   // derived unit out of a quantity and "fraction" of units
-  static derivedUnitWithNameAndQuantity (symbol: string,
-                                         name: string,
-                                         quantity: Quantity | undefined,
-                                         numerators: Unit[],
-                                         denominators: Unit[]): Unit {
-    return Unit.derivedUnitWithConstruction(symbol, name, quantity,
-      numerators, denominators,
-      makeConstruction(numerators, denominators));
+  static derivedUnitWithNameAndQuantity(
+    symbol: string,
+    name: string,
+    quantity: Quantity | undefined,
+    numerators: Unit[],
+    denominators: Unit[]
+  ): Unit {
+    return Unit.derivedUnitWithConstruction(
+      symbol,
+      name,
+      quantity,
+      numerators,
+      denominators,
+      makeConstruction(numerators, denominators)
+    );
   }
 
-  static derivedUnitWithName(symbol: string,
-                             name: string,
-                             numerators: Unit[],
-                             denominators: Unit[],
-                             construction: UnitToken | undefined): Unit {
+  static derivedUnitWithName(
+    symbol: string,
+    name: string,
+    numerators: Unit[],
+    denominators: Unit[],
+    construction: UnitToken | undefined
+  ): Unit {
     construction = construction ?? makeConstruction(numerators, denominators);
-    return Unit.derivedUnitWithConstruction(symbol, name, undefined, numerators, denominators, construction);
+    return Unit.derivedUnitWithConstruction(
+      symbol,
+      name,
+      undefined,
+      numerators,
+      denominators,
+      construction
+    );
   }
 
-  static derivedUnitWithSymbol(symbol: string | undefined,
-                               numerators: Unit[],
-                               denominators: Unit[]): Unit {
+  static derivedUnitWithSymbol(
+    symbol: string | undefined,
+    numerators: Unit[],
+    denominators: Unit[]
+  ): Unit {
     const construction = makeConstruction(numerators, denominators);
     const name = constructionToName(construction);
-    return Unit.derivedUnitWithName(symbol || constructionToSymbol(construction),
-      name, numerators, denominators, construction);
+    return Unit.derivedUnitWithName(
+      symbol ? symbol : constructionToSymbol(construction),
+      name,
+      numerators,
+      denominators,
+      construction
+    );
   }
 
-  static derivedUnit(numerators: Unit[],
-                     denominators: Unit[]): Unit {
+  static derivedUnit(numerators: Unit[], denominators: Unit[]): Unit {
     return Unit.derivedUnitWithSymbol(undefined, numerators, denominators);
   }
 
@@ -491,7 +611,8 @@ export class Unit {
   }
 }
 
-export const getUnitScale = (unit: Unit) => unit.scaleConstant * fractionToNumber(unit.scale);
+export const getUnitScale = (unit: Unit) =>
+  unit.scaleConstant * fractionToNumber(unit.scale);
 
 export const SCALAR_UNIT = Unit.baseUnit('', '1', SCALAR_QUANTITY);
 const SCALAR_TOKEN: UnitTokenLiteral = { unit: '', symbol: SCALAR_UNIT.symbol };

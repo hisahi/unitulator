@@ -14,11 +14,19 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
     <Provider store={store}>
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <React.Suspense fallback={
-          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-            <CircularProgress />
-          </div>
-        }>
+        <React.Suspense
+          fallback={
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
+            >
+              <CircularProgress />
+            </div>
+          }
+        >
           <Unitulator />
         </React.Suspense>
       </ThemeProvider>

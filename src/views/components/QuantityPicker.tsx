@@ -7,34 +7,69 @@ import { getLocalizedQuantityName } from '../../services/quantityText';
 import CustomQuantityDialog from './CustomQuantityDialog';
 
 interface QuantityOption {
-  name: string | null
-  quantity: Quantity | null
-  label?: string
-  group: string
-  custom: boolean
+  name: string | null;
+  quantity: Quantity | null;
+  label?: string;
+  group: string;
+  custom: boolean;
 }
 
 export interface QuantitySelection {
-  quantity: Quantity
-  custom: boolean
+  quantity: Quantity;
+  custom: boolean;
 }
 
-const CUSTOM_QUANTITY_GROUP = { label: 'main:quantitiesCustom', quantities: [], custom: true };
+const CUSTOM_QUANTITY_GROUP = {
+  label: 'main:quantitiesCustom',
+  quantities: [],
+  custom: true,
+};
 
-const mapQuantity = (quantity: Quantity, group: QuantityGroup): QuantityOption => (
-  { name: quantity.name, quantity, group: group.label, custom: !!group.custom }
-);
+const mapQuantity = (
+  quantity: Quantity,
+  group: QuantityGroup
+): QuantityOption => ({
+  name: quantity.name,
+  quantity,
+  group: group.label,
+  custom: !!group.custom,
+});
 
-const QuantityPicker = ({ quantityGroups, value, onChange, allowCustom }: { quantityGroups: QuantityGroup[], value: QuantitySelection | null, onChange: (newValue: QuantitySelection) => void, allowCustom: boolean }) => {
+const QuantityPicker = ({
+  quantityGroups,
+  value,
+  onChange,
+  allowCustom,
+}: {
+  quantityGroups: QuantityGroup[];
+  value: QuantitySelection | null;
+  onChange: (newValue: QuantitySelection) => void;
+  allowCustom: boolean;
+}) => {
   const { t } = useTranslation();
   const [selectValue, setSelectValue] = useState<QuantityOption | null>(null);
   const [inputValue, setInputValue] = useState('');
-  const [customQuantityDialogOpen, setCustomQuantityOpenDialog] = useState(false);
+  const [customQuantityDialogOpen, setCustomQuantityOpenDialog] =
+    useState(false);
 
-  const quantityList: QuantityOption[] = quantityGroups.map(quantityGroup => quantityGroup.quantities.map(quantity => mapQuantity(quantity, quantityGroup))).flat();
-  const quantityTable = Object.fromEntries(quantityGroups.map(quantityGroup => quantityGroup.quantities).flat().map(quantity => [quantity.name, quantity]));
-  const quantityOptionTable = Object.fromEntries(quantityList.map(quantityOption => [quantityOption.name, quantityOption]));
-  const hasGroups = quantityGroups.find(quantityGroup => !quantityGroup.label) == null;
+  const quantityList: QuantityOption[] = quantityGroups
+    .map((quantityGroup) =>
+      quantityGroup.quantities.map((quantity) =>
+        mapQuantity(quantity, quantityGroup)
+      )
+    )
+    .flat();
+  const quantityTable = Object.fromEntries(
+    quantityGroups
+      .map((quantityGroup) => quantityGroup.quantities)
+      .flat()
+      .map((quantity) => [quantity.name, quantity])
+  );
+  const quantityOptionTable = Object.fromEntries(
+    quantityList.map((quantityOption) => [quantityOption.name, quantityOption])
+  );
+  const hasGroups =
+    quantityGroups.find((quantityGroup) => !quantityGroup.label) == null;
 
   const updateSelectValue = (v: QuantityOption | null) => {
     if (v != null) {
@@ -69,7 +104,10 @@ const QuantityPicker = ({ quantityGroups, value, onChange, allowCustom }: { quan
   }, []);
 
   useEffect(() => {
-    if ((value == null) || (!value.custom && !quantityTable[value.quantity.name])) {
+    if (
+      value == null ||
+      (!value.custom && !quantityTable[value.quantity.name])
+    ) {
       setSelectValue(null);
       setInputValue('');
     } else {
@@ -86,12 +124,19 @@ const QuantityPicker = ({ quantityGroups, value, onChange, allowCustom }: { quan
     if (selectValue?.custom) {
       quantityList.unshift(selectValue);
     }
-    quantityList.push({ name: null, quantity: null, label: t(CUSTOM_QUANTITY_GROUP.label), group: CUSTOM_QUANTITY_GROUP.label, custom: true });
+    quantityList.push({
+      name: null,
+      quantity: null,
+      label: t(CUSTOM_QUANTITY_GROUP.label),
+      group: CUSTOM_QUANTITY_GROUP.label,
+      custom: true,
+    });
   }
 
-  quantityList.forEach(quantity => {
+  quantityList.forEach((quantity) => {
     quantity.group = t(quantity.group);
-    quantity.label = quantity.label || getLocalizedQuantityName(quantity.name!, t);
+    quantity.label =
+      quantity.label ?? getLocalizedQuantityName(quantity.name!, t);
   });
 
   return (
@@ -104,24 +149,24 @@ const QuantityPicker = ({ quantityGroups, value, onChange, allowCustom }: { quan
         disablePortal
         options={quantityList}
         groupBy={hasGroups ? (option) => option.group : undefined}
-        getOptionLabel={quantity => quantity.label!}
+        getOptionLabel={(quantity) => quantity.label!}
         selectOnFocus
         clearOnBlur
         handleHomeEndKeys
         isOptionEqualToValue={(option, value) => option.name === value.name}
         fullWidth
-        renderInput={(params) => <TextField {...params} fullWidth label={t('main:quantity')} />}
+        renderInput={(params) => (
+          <TextField {...params} fullWidth label={t('main:quantity')} />
+        )}
       />
-      {
-        allowCustom && (
-          <CustomQuantityDialog
-            open={customQuantityDialogOpen}
-            onClose={onCustomQuantityDialogClose}
-            onSubmit={onCustomQuantityDialogSubmit}
-            defaultQuantity={value?.custom ? value.quantity : null}
-          />
-        )
-      }
+      {allowCustom && (
+        <CustomQuantityDialog
+          open={customQuantityDialogOpen}
+          onClose={onCustomQuantityDialogClose}
+          onSubmit={onCustomQuantityDialogSubmit}
+          defaultQuantity={value?.custom ? value.quantity : null}
+        />
+      )}
     </Box>
   );
 };

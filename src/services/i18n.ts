@@ -12,9 +12,9 @@ i18next
     ns: ['main', 'quantity', 'unit'],
     defaultNS: 'main',
     interpolation: {
-      escapeValue: false
+      escapeValue: false,
     },
-    debug: false // process.env.NODE_ENV !== 'production',
+    debug: false, // process.env.NODE_ENV !== 'production',
   });
 
 export default i18next;

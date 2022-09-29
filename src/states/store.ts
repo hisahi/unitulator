@@ -5,7 +5,7 @@ import modeReducer from './mode';
 export default configureStore({
   reducer: {
     menu: menuReducer,
-    mode: modeReducer
+    mode: modeReducer,
   },
-  devTools: process.env.NODE_ENV !== 'production'
+  devTools: process.env.NODE_ENV !== 'production',
 });

@@ -1,8 +1,7 @@
-
 // fraction (bigint/bigint)
 export interface Fraction {
-  numerator: bigint
-  denominator: bigint
+  numerator: bigint;
+  denominator: bigint;
 }
 
 // standard Euclidean for GCD (for reducing fractions)
@@ -17,10 +16,13 @@ export const greatestCommonDivisor = (a: bigint, b: bigint): bigint => {
 };
 
 // absolute value of bigint (3 => 3, -5 => 5, etc.)
-const bigintAbs = (number: bigint): bigint => number < 0 ? -number : number;
+const bigintAbs = (number: bigint): bigint => (number < 0 ? -number : number);
 
 // bigint, bigint -> bigint/bigint fraction
-export const makeFraction = (numerator: bigint, denominator: bigint): Fraction => {
+export const makeFraction = (
+  numerator: bigint,
+  denominator: bigint
+): Fraction => {
   if (!denominator) {
     throw new Error('denominator cannot be zero');
   }
@@ -35,29 +37,19 @@ export const makeFraction = (numerator: bigint, denominator: bigint): Fraction =
   return { numerator, denominator };
 };
 
-export const integerToFraction = (integer: bigint): Fraction => ({ numerator: integer, denominator: BigInt(1) });
-
-const powerBigInt = (base: bigint, power: bigint): bigint => {
-  // return base ** power;
-  if (!power) return BigInt(1);
-  let x = base; let y = BigInt(1); let p = power;
-  const TWO = BigInt(2);
-  while (p > BigInt(1)) {
-    if (p % TWO) y = x * y;
-    x *= x;
-    p /= TWO;
-  }
-  return x * y;
-};
+export const integerToFraction = (integer: bigint): Fraction => ({
+  numerator: integer,
+  denominator: 1n,
+});
 
 export const powerOfTwo = (power: number | bigint): bigint => {
   if (typeof power === 'number') power = BigInt(power);
-  return powerBigInt(BigInt(2), power);
+  return 2n ** power;
 };
 
 export const powerOfTen = (power: number | bigint): bigint => {
   if (typeof power === 'number') power = BigInt(power);
-  return powerBigInt(BigInt(10), power);
+  return 10n ** power;
 };
 
 export const powerOfTenFraction = (power: number | bigint): Fraction => {
@@ -65,9 +57,9 @@ export const powerOfTenFraction = (power: number | bigint): Fraction => {
   const result = powerOfTen(bigintAbs(power));
   if (power < 0) {
     // -5 => 10^-5 > 1/10^5
-    return makeFraction(BigInt(1), result);
+    return makeFraction(1n, result);
   }
-  return makeFraction(result, BigInt(1));
+  return makeFraction(result, 1n);
 };
 
 // parses a number in one of three formats into a Fraction
@@ -95,22 +87,26 @@ export const parseFraction = (text: string): Fraction => {
 };
 
 // standard fraction multiplication a/b * c/d = ac/bd
-export const multiplyFraction = (a: Fraction, b: Fraction): Fraction => makeFraction(a.numerator * b.numerator,
-  a.denominator * b.denominator);
+export const multiplyFraction = (a: Fraction, b: Fraction): Fraction =>
+  makeFraction(a.numerator * b.numerator, a.denominator * b.denominator);
 
 // standard fraction division a/b * c/d = ad/bc
-export const divideFraction = (a: Fraction, b: Fraction): Fraction => makeFraction(a.numerator * b.denominator,
-  a.denominator * b.numerator);
+export const divideFraction = (a: Fraction, b: Fraction): Fraction =>
+  makeFraction(a.numerator * b.denominator, a.denominator * b.numerator);
 
 export const fractionToNumber = (fraction: Fraction): number =>
-// TODO this function is not good, come up with something better
+  // TODO this function is not good, come up with something better
   Number(fraction.numerator) / Number(fraction.denominator);
 
 export const fractionToString = (fraction: Fraction): string =>
   `${fraction.numerator.toString()}/${fraction.denominator.toString()}`;
 
-const productNumber = (numbers: number[]): number => numbers.reduce((a, b) => a * b, 1);
+const productNumber = (numbers: number[]): number =>
+  numbers.reduce((a, b) => a * b, 1);
 
-export const divideScales = (numerators: number[], denominators: number[]): number =>
-// what about when we're dealing with large numbers?
+export const divideScales = (
+  numerators: number[],
+  denominators: number[]
+): number =>
+  // what about when we're dealing with large numbers?
   productNumber(numerators) / productNumber(denominators);

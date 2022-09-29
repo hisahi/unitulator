@@ -1,7 +1,7 @@
 export const isInteger = (n: number): boolean => n === Math.floor(n);
 
 export const deparenthesize = (text: string | undefined): string => {
-  text = text || '';
+  text = text ?? '';
   if (text.startsWith('(') && text.endsWith(')')) {
     text = text.slice(1, -1);
   }
@@ -9,8 +9,8 @@ export const deparenthesize = (text: string | undefined): string => {
 };
 
 export const parenthesize = (text: string | undefined): string => {
-  text = text || '';
-  if ((text.match(/[*/()^]/) != null) && !text.startsWith('(')) {
+  text = text ?? '';
+  if (text.match(/[*/()^]/) != null && !text.startsWith('(')) {
     text = `(${text})`;
   }
   return text;
@@ -22,21 +22,33 @@ export const makeNeatProductFromSortedTerms = (terms: string[]): string => {
   }
   const mergedTerms: Array<[string, bigint]> = [];
   for (const term of terms) {
-    if ((mergedTerms.length === 0) || mergedTerms[mergedTerms.length - 1][0] !== term) {
-      mergedTerms.push([term, BigInt(1)]);
+    if (
+      mergedTerms.length === 0 ||
+      mergedTerms[mergedTerms.length - 1][0] !== term
+    ) {
+      mergedTerms.push([term, 1n]);
     } else {
       mergedTerms[mergedTerms.length - 1][1]++;
     }
   }
-  return mergedTerms.map(([term, power]) => term + (power > 1 ? `^${power.toString()}` : '')).join('*');
+  return mergedTerms
+    .map(([term, power]) => term + (power > 1 ? `^${power.toString()}` : ''))
+    .join('*');
 };
 
-export const shallowCopy = <T extends Record<string, unknown>>(value: T): T => ({ ...value });
+export const shallowCopy = <T extends object>(value: T): T => ({ ...value });
 
 // TODO fix. this may very well be broken
-export const caseFold = (text: string, locales?: string[] | undefined): string => text.toLocaleLowerCase(locales);
+export const caseFold = (
+  text: string,
+  locales?: string[] | undefined
+): string => text.toLocaleLowerCase(locales);
 
-export const residualSplit = (text: string, separator: string, maxSplit: number | undefined): string[] => {
+export const residualSplit = (
+  text: string,
+  separator: string,
+  maxSplit: number | undefined
+): string[] => {
   const split = text.split(separator);
   if (maxSplit === undefined) return split;
   if (maxSplit < 0 || !Number.isFinite(maxSplit) || !isInteger(maxSplit)) {

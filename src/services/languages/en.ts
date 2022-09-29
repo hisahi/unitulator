@@ -1,5 +1,10 @@
 import i18n from '../i18n';
-import { UnitToken, isUnitTokenLiteral, isUnitTokenProduct, isUnitTokenFraction } from '../../core/unit';
+import {
+  UnitToken,
+  isUnitTokenLiteral,
+  isUnitTokenProduct,
+  isUnitTokenFraction,
+} from '../../core/unit';
 
 const formatOrdinal = (power: bigint): string => {
   const hundred = Number(power % BigInt(100));
@@ -22,12 +27,19 @@ const formatPower = (power: bigint | undefined): [string, string] => {
 export const getLocalizedUnitName = (token: UnitToken): string => {
   if (isUnitTokenFraction(token)) {
     if (isUnitTokenLiteral(token.numerator) && !token.numerator.unit) {
-      return i18n.t('main:unitReciprocal', { denominator: getLocalizedUnitName(token.denominator) });
+      return i18n.t('main:unitReciprocal', {
+        denominator: getLocalizedUnitName(token.denominator),
+      });
     }
-    return i18n.t('main:unitPer', { numerator: getLocalizedUnitName(token.numerator), denominator: getLocalizedUnitName(token.denominator) });
-  } if (isUnitTokenProduct(token)) {
-    return token.product.map(t => getLocalizedUnitName(t)).join('-');
-  } if (isUnitTokenLiteral(token)) {
+    return i18n.t('main:unitPer', {
+      numerator: getLocalizedUnitName(token.numerator),
+      denominator: getLocalizedUnitName(token.denominator),
+    });
+  }
+  if (isUnitTokenProduct(token)) {
+    return token.product.map((t) => getLocalizedUnitName(t)).join('-');
+  }
+  if (isUnitTokenLiteral(token)) {
     const prefix = token.prefix ? `${token.prefix}` : '';
     const [powerPrefix, powerSuffix] = formatPower(token.power);
     return powerPrefix + prefix + token.unit + powerSuffix;

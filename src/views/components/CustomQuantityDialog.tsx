@@ -1,18 +1,53 @@
 import React, { useState } from 'react';
-import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, Divider, Grid, Stack, TextField } from '@mui/material';
+import {
+  Box,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Divider,
+  Grid,
+  Stack,
+  TextField,
+} from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { Quantity, quantitySearchKey, parseQuantityFromKey, quantityConstructionToFormula } from '../../core/quantity';
+import {
+  Quantity,
+  quantitySearchKey,
+  parseQuantityFromKey,
+  quantityConstructionToFormula,
+} from '../../core/quantity';
 import { SCALAR_QUANTITY, QUANTITIES } from '../../data/quantity';
 import { QuantityGroup } from '../lib/units';
-import { getLocalizedQuantityName, makeLiteralQuantityName } from '../../services/quantityText';
+import {
+  getLocalizedQuantityName,
+  makeLiteralQuantityName,
+} from '../../services/quantityText';
 import QuantityPicker from './QuantityPicker';
 
-const allQuantitiesFlat: QuantityGroup[] = [{ label: '', quantities: QUANTITIES }];
+const allQuantitiesFlat: QuantityGroup[] = [
+  { label: '', quantities: QUANTITIES },
+];
 
-const CustomQuantityDialog = ({ open, defaultQuantity, onClose, onSubmit }: { open: boolean, defaultQuantity: Quantity | null, onClose: () => void, onSubmit: (quantity: Quantity) => void }) => {
+const CustomQuantityDialog = ({
+  open,
+  defaultQuantity,
+  onClose,
+  onSubmit,
+}: {
+  open: boolean;
+  defaultQuantity: Quantity | null;
+  onClose: () => void;
+  onSubmit: (quantity: Quantity) => void;
+}) => {
   const { t } = useTranslation();
   const [quantity, setQuantity] = useState(defaultQuantity ?? SCALAR_QUANTITY);
-  const [quantityName, setQuantityName] = useState((defaultQuantity != null) ? getLocalizedQuantityName(defaultQuantity.name, t) : '');
+  const [quantityName, setQuantityName] = useState(
+    defaultQuantity != null
+      ? getLocalizedQuantityName(defaultQuantity.name, t)
+      : ''
+  );
   const [partQuantity, setPartQuantity] = useState<Quantity | null>(null);
   const [powerValue, setPowerValue] = useState<number>(1);
   const [sourceDialogOpen, setSourceDialogOpen] = useState<boolean>(false);
@@ -58,7 +93,14 @@ const CustomQuantityDialog = ({ open, defaultQuantity, onClose, onSubmit }: { op
     const newQuantity = partQuantity;
     if (newQuantity != null) {
       if (powerValue > 1) {
-        setQuantity(Quantity.extendQuantity('', newQuantity, [...Array(powerValue - 1).fill(newQuantity)], []));
+        setQuantity(
+          Quantity.extendQuantity(
+            '',
+            newQuantity,
+            [...Array(powerValue - 1).fill(newQuantity)],
+            []
+          )
+        );
       } else {
         setQuantity(newQuantity);
       }
@@ -68,14 +110,28 @@ const CustomQuantityDialog = ({ open, defaultQuantity, onClose, onSubmit }: { op
   const multiplyByPartQuantity = () => {
     const newQuantity = partQuantity;
     if (newQuantity != null) {
-      setQuantity(Quantity.extendQuantity('', quantity, [...Array(powerValue).fill(newQuantity)], []));
+      setQuantity(
+        Quantity.extendQuantity(
+          '',
+          quantity,
+          [...Array(powerValue).fill(newQuantity)],
+          []
+        )
+      );
     }
   };
 
   const divideByPartQuantity = () => {
     const newQuantity = partQuantity;
     if (newQuantity != null) {
-      setQuantity(Quantity.extendQuantity('', quantity, [], [...Array(powerValue).fill(newQuantity)]));
+      setQuantity(
+        Quantity.extendQuantity(
+          '',
+          quantity,
+          [],
+          [...Array(powerValue).fill(newQuantity)]
+        )
+      );
     }
   };
 
@@ -97,28 +153,81 @@ const CustomQuantityDialog = ({ open, defaultQuantity, onClose, onSubmit }: { op
           {t('main:customQuantityDialog.title')}
         </DialogTitle>
         <DialogContent>
-          <Box style={ { alignItems: 'stretch', minHeight: '500px', flexDirection: 'column' } }>
+          <Box
+            style={{
+              alignItems: 'stretch',
+              minHeight: '500px',
+              flexDirection: 'column',
+            }}
+          >
             <Stack spacing={2}>
-              <TextField fullWidth value={quantityName} onChange={e => setQuantityName(e.target.value)} label={t('main:customQuantityDialog.name')} required />
-              <TextField fullWidth value={quantityConstructionToFormula(quantity)} label={t('main:customQuantityDialog.formula')} variant="filled" inputProps={{ readOnly: true }} />
+              <TextField
+                fullWidth
+                value={quantityName}
+                onChange={(e) => setQuantityName(e.target.value)}
+                label={t('main:customQuantityDialog.name')}
+                required
+              />
+              <TextField
+                fullWidth
+                value={quantityConstructionToFormula(quantity)}
+                label={t('main:customQuantityDialog.formula')}
+                variant="filled"
+                inputProps={{ readOnly: true }}
+              />
               <Divider />
               <Grid container spacing={0}>
                 <Grid item xs={8} p={1}>
-                  <QuantityPicker quantityGroups={allQuantitiesFlat} value={(partQuantity != null) ? { quantity: partQuantity, custom: false } : null} onChange={p => setPartQuantity(p.quantity)} allowCustom={false} />
+                  <QuantityPicker
+                    quantityGroups={allQuantitiesFlat}
+                    value={
+                      partQuantity != null
+                        ? { quantity: partQuantity, custom: false }
+                        : null
+                    }
+                    onChange={(p) => setPartQuantity(p.quantity)}
+                    allowCustom={false}
+                  />
                 </Grid>
                 <Grid item xs={4} p={1}>
-                  <TextField type="number" label={t('main:customQuantityDialog.power')} inputProps={{ style: { textAlign: 'end' }, min: 1, max: 9 }} value={powerValue} onChange={e => updatePowerValue(e.target.value)} error={!powerValue} fullWidth />
+                  <TextField
+                    type="number"
+                    label={t('main:customQuantityDialog.power')}
+                    inputProps={{ style: { textAlign: 'end' }, min: 1, max: 9 }}
+                    value={powerValue}
+                    onChange={(e) => updatePowerValue(e.target.value)}
+                    error={!powerValue}
+                    fullWidth
+                  />
                 </Grid>
                 <Grid item xs={12} p={1}>
                   <Grid container spacing={1}>
                     <Grid item xs>
-                      <Button fullWidth onClick={() => resetToPartQuantity()} disabled={partQuantity == null}>{t('main:customQuantityDialog.set')}</Button>
+                      <Button
+                        fullWidth
+                        onClick={() => resetToPartQuantity()}
+                        disabled={partQuantity == null}
+                      >
+                        {t('main:customQuantityDialog.set')}
+                      </Button>
                     </Grid>
                     <Grid item xs>
-                      <Button fullWidth onClick={() => multiplyByPartQuantity()} disabled={partQuantity == null}>{t('main:customQuantityDialog.multiply')}</Button>
+                      <Button
+                        fullWidth
+                        onClick={() => multiplyByPartQuantity()}
+                        disabled={partQuantity == null}
+                      >
+                        {t('main:customQuantityDialog.multiply')}
+                      </Button>
                     </Grid>
                     <Grid item xs>
-                      <Button fullWidth onClick={() => divideByPartQuantity()} disabled={partQuantity == null}>{t('main:customQuantityDialog.divide')}</Button>
+                      <Button
+                        fullWidth
+                        onClick={() => divideByPartQuantity()}
+                        disabled={partQuantity == null}
+                      >
+                        {t('main:customQuantityDialog.divide')}
+                      </Button>
                     </Grid>
                     {/*
                     <Grid item xs>
@@ -132,9 +241,13 @@ const CustomQuantityDialog = ({ open, defaultQuantity, onClose, onSubmit }: { op
           </Box>
         </DialogContent>
         <DialogActions>
-          <Button onClick={onSourceButton}>{t('main:customQuantityDialog.source')}</Button>
+          <Button onClick={onSourceButton}>
+            {t('main:customQuantityDialog.source')}
+          </Button>
           <Button onClick={onClose}>{t('main:cancel')}</Button>
-          <Button onClick={submit} disabled={!quantityName} autoFocus>{t('main:ok')}</Button>
+          <Button onClick={submit} disabled={!quantityName} autoFocus>
+            {t('main:ok')}
+          </Button>
         </DialogActions>
       </Dialog>
       <Dialog
@@ -149,7 +262,13 @@ const CustomQuantityDialog = ({ open, defaultQuantity, onClose, onSubmit }: { op
         <DialogContent>
           <br />
           <Stack spacing={2}>
-            <TextField fullWidth value={sourceDialogText} onChange={e => setSourceDialogText(e.target.value)} label={t('main:customQuantityDialog.source')} error={sourceDialogError} />
+            <TextField
+              fullWidth
+              value={sourceDialogText}
+              onChange={(e) => setSourceDialogText(e.target.value)}
+              label={t('main:customQuantityDialog.source')}
+              error={sourceDialogError}
+            />
           </Stack>
           <br />
         </DialogContent>

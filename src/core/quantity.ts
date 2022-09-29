@@ -26,8 +26,8 @@ const baseQuantityToChar = (quantity: BaseQuantity): string =>
     [BaseQuantity.AmountOfSubstance]: 'M',
     [BaseQuantity.LuminousIntensity]: 'c',
     [BaseQuantity.PlaneAngle]: 'r',
-    [BaseQuantity.SolidAngle]: 'S'
-  })[quantity];
+    [BaseQuantity.SolidAngle]: 'S',
+  }[quantity]);
 
 // for quantity -> string conversion
 const baseQuantityFromChar = (key: string): BaseQuantity | undefined =>
@@ -40,15 +40,18 @@ const baseQuantityFromChar = (key: string): BaseQuantity | undefined =>
     M: BaseQuantity.AmountOfSubstance,
     c: BaseQuantity.LuminousIntensity,
     r: BaseQuantity.PlaneAngle,
-    S: BaseQuantity.SolidAngle
-  })[key];
+    S: BaseQuantity.SolidAngle,
+  }[key]);
 
 // reduces a "fraction" of quantities by sorting and removing entries in both
-const reduceQuantityFraction = (numerator: BaseQuantity[],
-                                denominator: BaseQuantity[]): void => {
-  for (let numeratorIndex = 0, denominatorIndex = 0;
-    numeratorIndex < numerator.length &&
-        denominatorIndex < denominator.length;
+const reduceQuantityFraction = (
+  numerator: BaseQuantity[],
+  denominator: BaseQuantity[]
+): void => {
+  for (
+    let numeratorIndex = 0, denominatorIndex = 0;
+    numeratorIndex < numerator.length && denominatorIndex < denominator.length;
+
   ) {
     if (numerator[numeratorIndex] === denominator[denominatorIndex]) {
       numerator.splice(numeratorIndex, 1);
@@ -62,13 +65,13 @@ const reduceQuantityFraction = (numerator: BaseQuantity[],
 };
 
 export interface QuantityLiteral {
-  name: string
-  power?: bigint
+  name: string;
+  power?: bigint;
 }
 
 export interface QuantityConstruction {
-  numerators: QuantityLiteral[]
-  denominators: QuantityLiteral[]
+  numerators: QuantityLiteral[];
+  denominators: QuantityLiteral[];
 }
 
 const mergePowers = (tokens: QuantityLiteral[]): QuantityLiteral[] => {
@@ -78,7 +81,7 @@ const mergePowers = (tokens: QuantityLiteral[]): QuantityLiteral[] => {
   for (const token of tokens) {
     const mergeTo = seen[token.name];
     if (mergeTo) {
-      mergeTo.power = (mergeTo.power ?? BigInt(1)) + (token.power ?? BigInt(1));
+      mergeTo.power = (mergeTo.power ?? 1n) + (token.power ?? 1n);
     } else {
       seen[token.name] = token;
       result.push(token);
@@ -88,9 +91,13 @@ const mergePowers = (tokens: QuantityLiteral[]): QuantityLiteral[] => {
   return result;
 };
 
-const cancelPowers = (numerators: QuantityLiteral[], denominators: QuantityLiteral[]) => {
+const cancelPowers = (
+  numerators: QuantityLiteral[],
+  denominators: QuantityLiteral[]
+) => {
   // cancel out units from both sides (including in powers)
-  const numeratorsByName: { [name: string]: Array<[number, QuantityLiteral]> } = {};
+  const numeratorsByName: { [name: string]: Array<[number, QuantityLiteral]> } =
+    {};
 
   for (let index = 0; index < numerators.length; ++index) {
     const token = numerators[index];
@@ -99,19 +106,20 @@ const cancelPowers = (numerators: QuantityLiteral[], denominators: QuantityLiter
     numeratorsByName[name].push([index, token]);
   }
 
-  nextDenominator:
-  for (let index = 0; index < denominators.length;) {
+  nextDenominator: for (let index = 0; index < denominators.length; ) {
     const token = denominators[index];
     const { name } = token;
     const candidates = numeratorsByName[name];
     if (candidates) {
-      for (let candidateIndex = 0; candidateIndex < candidates.length;) {
+      for (let candidateIndex = 0; candidateIndex < candidates.length; ) {
         const [numeratorIndex, candidate] = candidates[candidateIndex];
-        const candidatePower = candidate.power ?? BigInt(1);
-        const tokenPower = token.power ?? BigInt(1);
+        const candidatePower = candidate.power ?? 1n;
+        const tokenPower = token.power ?? 1n;
 
-        if (candidatePower > tokenPower) candidate.power = candidatePower - tokenPower;
-        if (candidatePower < tokenPower) token.power = tokenPower - candidatePower;
+        if (candidatePower > tokenPower)
+          candidate.power = candidatePower - tokenPower;
+        if (candidatePower < tokenPower)
+          token.power = tokenPower - candidatePower;
 
         if (candidatePower <= tokenPower) {
           candidates.splice(candidateIndex, 1);
@@ -132,18 +140,22 @@ const cancelPowers = (numerators: QuantityLiteral[], denominators: QuantityLiter
 
 export class Quantity {
   // basic quantity creator
-  constructor(public name: string,
-              public numerator: BaseQuantity[],
-              public denominator: BaseQuantity[],
-              public construction: QuantityConstruction) {
+  constructor(
+    public name: string,
+    public numerator: BaseQuantity[],
+    public denominator: BaseQuantity[],
+    public construction: QuantityConstruction
+  ) {
     this.numerator.sort();
     this.denominator.sort();
     reduceQuantityFraction(this.numerator, this.denominator);
   }
 
   // quantity that is a product of integer powers of quantities
-  static productQuantity(name: string,
-                         derivation: Array<[BaseQuantity, number]>): Quantity {
+  static productQuantity(
+    name: string,
+    derivation: Array<[BaseQuantity, number]>
+  ): Quantity {
     const numerator: BaseQuantity[] = [];
     const denominator: BaseQuantity[] = [];
 
@@ -163,14 +175,18 @@ export class Quantity {
       }
     });
 
-    return new Quantity(name, numerator, denominator,
-      { numerators: [{ name }], denominators: [] });
+    return new Quantity(name, numerator, denominator, {
+      numerators: [{ name }],
+      denominators: [],
+    });
   }
 
   // quantity that is a "fraction" of other quantities
-  static derivedQuantity(name: string,
-                         numerators: Quantity[],
-                         denominators: Quantity[]) {
+  static derivedQuantity(
+    name: string,
+    numerators: Quantity[],
+    denominators: Quantity[]
+  ) {
     let numerator: BaseQuantity[] = [];
     let denominator: BaseQuantity[] = [];
 
@@ -183,32 +199,57 @@ export class Quantity {
       denominator = [...denominator, ...quantity.numerator];
     }
 
-    return new Quantity(name, numerator, denominator,
-      { numerators: [{ name }], denominators: [] });
+    return new Quantity(name, numerator, denominator, {
+      numerators: [{ name }],
+      denominators: [],
+    });
   }
 
-  static extendQuantity(name: string,
-                        quantity: Quantity,
-                        numerators: Quantity[],
-                        denominators: Quantity[]) {
-    const numeratorTokens: QuantityLiteral[] = mergePowers([...(quantity.construction.numerators || []), ...numerators.map(q => ({ name: q.name }))]);
-    const denominatorTokens: QuantityLiteral[] = mergePowers([...(quantity.construction.denominators || []), ...denominators.map(q => ({ name: q.name }))]);
+  static extendQuantity(
+    name: string,
+    quantity: Quantity,
+    numerators: Quantity[],
+    denominators: Quantity[]
+  ) {
+    const numeratorTokens: QuantityLiteral[] = mergePowers([
+      ...(quantity.construction.numerators || []),
+      ...numerators.map((q) => ({ name: q.name })),
+    ]);
+    const denominatorTokens: QuantityLiteral[] = mergePowers([
+      ...(quantity.construction.denominators || []),
+      ...denominators.map((q) => ({ name: q.name })),
+    ]);
 
     cancelPowers(numeratorTokens, denominatorTokens);
 
-    return new Quantity(name,
-      [...quantity.numerator, ...numerators.map(q => q.numerator).flat(), ...denominators.map(q => q.denominator).flat()],
-      [...quantity.denominator, ...numerators.map(q => q.denominator).flat(), ...denominators.map(q => q.numerator).flat()],
-      { numerators: numeratorTokens, denominators: denominatorTokens });
+    return new Quantity(
+      name,
+      [
+        ...quantity.numerator,
+        ...numerators.map((q) => q.numerator).flat(),
+        ...denominators.map((q) => q.denominator).flat(),
+      ],
+      [
+        ...quantity.denominator,
+        ...numerators.map((q) => q.denominator).flat(),
+        ...denominators.map((q) => q.numerator).flat(),
+      ],
+      { numerators: numeratorTokens, denominators: denominatorTokens }
+    );
   }
 }
 
 // converts quantity into a unique string for lookup purposes
 export const quantitySearchKey = (quantity: Quantity): string =>
-  `${quantity.numerator.map(baseQuantityToChar).join('')}/${quantity.denominator.map(baseQuantityToChar).join('')}`;
+  `${quantity.numerator.map(baseQuantityToChar).join('')}/${quantity.denominator
+    .map(baseQuantityToChar)
+    .join('')}`;
 
 // converts key back to quantity
-export const parseQuantityFromKey = (name: string, key: string): Quantity | null => {
+export const parseQuantityFromKey = (
+  name: string,
+  key: string
+): Quantity | null => {
   const numerators: BaseQuantity[] = [];
   const denominators: BaseQuantity[] = [];
   let target: BaseQuantity[] = numerators;
@@ -224,7 +265,8 @@ export const parseQuantityFromKey = (name: string, key: string): Quantity | null
   }
 
   return new Quantity(name, numerators, denominators, {
-    numerators: [{ name }], denominators: []
+    numerators: [{ name }],
+    denominators: [],
   });
 };
 
@@ -234,12 +276,16 @@ export const isEquivalentQuantity = (lhs: Quantity, rhs: Quantity): boolean =>
 
 // are two quantities compatible ("close enough")
 export const isCompatibleQuantity = (lhs: Quantity, rhs: Quantity): boolean =>
-  lhs.name === rhs.name || (!(lhs.name.match(/[*/()^]/) == null) && isEquivalentQuantity(lhs, rhs));
+  lhs.name === rhs.name ||
+  (!(lhs.name.match(/[*/()^]/) == null) && isEquivalentQuantity(lhs, rhs));
 
-const maybeParenthesize = (name: string) => name.search(/\s/) >= 0 ? `(${name})` : name;
+const maybeParenthesize = (name: string) =>
+  name.search(/\s/) >= 0 ? `(${name})` : name;
 
 const quantityLiteralToFormula = (token: QuantityLiteral): string =>
-  (token.power ? `${maybeParenthesize(token.name)}^${String(token.power)}` : token.name);
+  token.power
+    ? `${maybeParenthesize(token.name)}^${String(token.power)}`
+    : token.name;
 
 export const quantityConstructionToFormula = (quantity: Quantity): string => {
   const { construction } = quantity;
@@ -248,7 +294,9 @@ export const quantityConstructionToFormula = (quantity: Quantity): string => {
 
   if (denominators.length > 0) {
     result = result || '1';
-    result += ` / ${maybeParenthesize(denominators.map(quantityLiteralToFormula).join(' * '))}`;
+    result += ` / ${maybeParenthesize(
+      denominators.map(quantityLiteralToFormula).join(' * ')
+    )}`;
   }
 
   return result;

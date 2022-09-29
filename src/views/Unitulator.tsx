@@ -17,18 +17,18 @@ const Unitulator = () => {
 
   const displayMode = () => {
     switch (modeState.mode) {
-    case UnitulatorMode.Difference:
-      return <ModeDifference />;
-    case UnitulatorMode.Additive:
-      return <ModeAdditive />;
-    case UnitulatorMode.Absolute:
-      return <ModeAbsolute />;
-    case UnitulatorMode.Logarithm:
-      return <ModeLogarithm />;
-    case UnitulatorMode.Percent:
-      return <ModePercent />;
-    case UnitulatorMode.Help:
-      return <ModeHelp />;
+      case UnitulatorMode.Difference:
+        return <ModeDifference />;
+      case UnitulatorMode.Additive:
+        return <ModeAdditive />;
+      case UnitulatorMode.Absolute:
+        return <ModeAbsolute />;
+      case UnitulatorMode.Logarithm:
+        return <ModeLogarithm />;
+      case UnitulatorMode.Percent:
+        return <ModePercent />;
+      case UnitulatorMode.Help:
+        return <ModeHelp />;
     }
   };
 
@@ -40,9 +40,7 @@ const Unitulator = () => {
           <TopBar />
         </header>
         <main>
-          <Container maxWidth="sm">
-            {displayMode()}
-          </Container>
+          <Container maxWidth="sm">{displayMode()}</Container>
         </main>
       </Box>
     </div>

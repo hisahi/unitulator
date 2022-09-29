@@ -15,7 +15,11 @@ export const getScaleBetweenUnits = (fromUnit: Unit, toUnit: Unit): number => {
   return scale;
 };
 
-export const doLinearConversion = (fromUnit: Unit, toUnit: Unit, input: number): number => {
+export const doLinearConversion = (
+  fromUnit: Unit,
+  toUnit: Unit,
+  input: number
+): number => {
   if (!fromUnit || !toUnit) {
     throw new Error('both fromUnit and toUnit must be specified');
   }
@@ -29,10 +33,14 @@ export const doLinearConversion = (fromUnit: Unit, toUnit: Unit, input: number):
   return input * getScaleBetweenUnits(fromUnit, toUnit);
 };
 
-export const unitHasZeroPoint = (unit: Unit): boolean => ZERO_POINTS[unit.name] !== undefined;
+export const unitHasZeroPoint = (unit: Unit): boolean =>
+  ZERO_POINTS[unit.name] !== undefined;
 
-export const doAbsoluteConversion = (fromUnit: Unit, toUnit: Unit,
-                                     input: number): number => {
+export const doAbsoluteConversion = (
+  fromUnit: Unit,
+  toUnit: Unit,
+  input: number
+): number => {
   if (!fromUnit || !toUnit) {
     throw new Error('both fromUnit and toUnit must be specified');
   }
@@ -51,10 +59,19 @@ export const doAbsoluteConversion = (fromUnit: Unit, toUnit: Unit,
   return (input - zeroFrom) * scale + zeroTo;
 };
 
-export const doAdditiveConversion = (fromUnits: Unit[], toUnits: Unit[],
-                                     inputs: number[]): number[] => {
-  const sum: number = [...inputs].reverse()
-    .reduce((previous, current, index) => previous + getUnitScale(fromUnits[fromUnits.length - index - 1]) * current, 0);
+export const doAdditiveConversion = (
+  fromUnits: Unit[],
+  toUnits: Unit[],
+  inputs: number[]
+): number[] => {
+  const sum: number = [...inputs]
+    .reverse()
+    .reduce(
+      (previous, current, index) =>
+        previous +
+        getUnitScale(fromUnits[fromUnits.length - index - 1]) * current,
+      0
+    );
 
   const results: number[] = [];
 

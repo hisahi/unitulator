@@ -4,33 +4,51 @@ import { parseFraction } from '../core/fraction';
 import { Unit, SCALAR_UNIT } from '../core/unit';
 import { PREFIX } from './prefix';
 import { SCALAR_CONSTANTS } from './constants';
-import { UnitSpecification, unitSpecificationToUnit } from '../core/unitSpecification';
+import {
+  UnitSpecification,
+  unitSpecificationToUnit,
+} from '../core/unitSpecification';
 import scaledUnits from './scaledUnits.json';
 
 const KILO = PREFIX.kilo;
 
-const s = Unit.baseUnit('second', 's', BASE_QUANTITIES[BaseQuantity.Time]);
-const m = Unit.baseUnit('meter', 'm', BASE_QUANTITIES[BaseQuantity.Length]);
-const g = Unit.baseUnit('gram', 'g', BASE_QUANTITIES[BaseQuantity.Mass]);
-const A = Unit.baseUnit('ampere', 'A', BASE_QUANTITIES[BaseQuantity.ElectricCurrent]);
-const K = Unit.baseUnit('kelvin', 'K', BASE_QUANTITIES[BaseQuantity.Temperature]);
-const mol = Unit.baseUnit('mole', 'mol', BASE_QUANTITIES[BaseQuantity.AmountOfSubstance]);
-const cd = Unit.baseUnit('candela', 'cd', BASE_QUANTITIES[BaseQuantity.LuminousIntensity]);
-const rad = Unit.baseUnit('radian', 'rad', BASE_QUANTITIES[BaseQuantity.PlaneAngle]);
-const sr = Unit.baseUnit('steradian', 'sr', BASE_QUANTITIES[BaseQuantity.SolidAngle]);
+const Q = (name: string, symbol: string, quantity: BaseQuantity) =>
+  Unit.baseUnit(name, symbol, BASE_QUANTITIES[quantity]);
+
+const s = Q('second', 's', BaseQuantity.Time);
+const m = Q('meter', 'm', BaseQuantity.Length);
+const g = Q('gram', 'g', BaseQuantity.Mass);
+const A = Q('ampere', 'A', BaseQuantity.ElectricCurrent);
+const K = Q('kelvin', 'K', BaseQuantity.Temperature);
+const mol = Q('mole', 'mol', BaseQuantity.AmountOfSubstance);
+const cd = Q('candela', 'cd', BaseQuantity.LuminousIntensity);
+const rad = Q('radian', 'rad', BaseQuantity.PlaneAngle);
+const sr = Q('steradian', 'sr', BaseQuantity.SolidAngle);
 
 const BASE_UNITS = [s, m, g, A, K, mol, cd, rad, sr];
 const kg = Unit.prefixUnit(KILO, g);
 
-const U = (symbol: string,
-           name: string,
-           numerators: Unit[],
-           denominators: Unit[]) => Unit.derivedUnitWithName(symbol, name, numerators, denominators, undefined);
-const X = (symbol: string,
-           name: string,
-           quantity: string,
-           numerators: Unit[],
-           denominators: Unit[]): Unit => Unit.derivedUnitWithNameAndQuantity(symbol, name, QUANTITY[quantity], numerators, denominators);
+const U = (
+  symbol: string,
+  name: string,
+  numerators: Unit[],
+  denominators: Unit[]
+) =>
+  Unit.derivedUnitWithName(symbol, name, numerators, denominators, undefined);
+const X = (
+  symbol: string,
+  name: string,
+  quantity: string,
+  numerators: Unit[],
+  denominators: Unit[]
+): Unit =>
+  Unit.derivedUnitWithNameAndQuantity(
+    symbol,
+    name,
+    QUANTITY[quantity],
+    numerators,
+    denominators
+  );
 
 /* eslint-disable */ 
 export const UNITS: Unit[] = [
@@ -62,22 +80,31 @@ export const UNITS: Unit[] = [
 /* eslint-enable */
 
 interface ScaledUnit {
-  baseUnit: UnitSpecification
-  symbol: string
-  name: string
-  scaleFraction: string
-  scaleConstant: number | string | undefined
+  baseUnit: UnitSpecification;
+  symbol: string;
+  name: string;
+  scaleFraction: string;
+  scaleConstant: number | string | undefined;
 }
 
 export const UNIT: { [name: string]: Unit } = {};
 
-UNITS.forEach(unit => UNIT[unit.name] = unit);
+UNITS.forEach((unit) => (UNIT[unit.name] = unit));
 
 for (const scaledUnit_ of scaledUnits) {
   const scaledUnit = scaledUnit_ as ScaledUnit;
   const fraction = parseFraction(scaledUnit.scaleFraction);
-  const scaleFactor = typeof scaledUnit.scaleConstant === 'string' ? SCALAR_CONSTANTS[scaledUnit.scaleConstant] : (scaledUnit.scaleConstant || 1);
-  const newUnit = Unit.scaledUnit(scaledUnit.name, scaledUnit.symbol, unitSpecificationToUnit(scaledUnit.baseUnit, UNIT), fraction, scaleFactor);
+  const scaleFactor =
+    typeof scaledUnit.scaleConstant === 'string'
+      ? SCALAR_CONSTANTS[scaledUnit.scaleConstant]
+      : scaledUnit.scaleConstant ?? 1;
+  const newUnit = Unit.scaledUnit(
+    scaledUnit.name,
+    scaledUnit.symbol,
+    unitSpecificationToUnit(scaledUnit.baseUnit, UNIT),
+    fraction,
+    scaleFactor
+  );
   UNITS.push(newUnit);
   UNIT[newUnit.name] = newUnit;
 }

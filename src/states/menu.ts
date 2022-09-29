@@ -2,11 +2,11 @@
 import Action from '../types/action';
 
 export interface MenuState {
-  open: boolean
+  open: boolean;
 }
 
 const defaults: MenuState = {
-  open: false
+  open: false,
 };
 
 const OPEN_MENU = 'OPEN_MENU';
@@ -18,11 +18,11 @@ export const closeMenu = (): Action<string, void> => ({ type: CLOSE_MENU });
 
 export default function menu(state = defaults, action: Action<string, any>) {
   switch (action.type) {
-  case OPEN_MENU:
-    return { ...state, open: true };
-  case CLOSE_MENU:
-    return { ...state, open: false };
-  default:
-    return state;
+    case OPEN_MENU:
+      return { ...state, open: true };
+    case CLOSE_MENU:
+      return { ...state, open: false };
+    default:
+      return state;
   }
 }

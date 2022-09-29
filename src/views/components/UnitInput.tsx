@@ -5,10 +5,22 @@ import { Quantity } from '../../core/quantity';
 import { UnitGroup } from '../lib/units';
 import UnitPicker, { UnitSelection } from './UnitPicker';
 
-const UnitInput = ({ mode, quantity, unitGroups, value, onChange, unitValue, onUnitChange }: {
-  mode: string, quantity: Quantity, unitGroups: UnitGroup[], value: string
-  onChange: (newText: string, newValue: number | undefined) => void
-  unitValue: UnitSelection | null, onUnitChange: (newValue: UnitSelection) => void
+const UnitInput = ({
+  mode,
+  quantity,
+  unitGroups,
+  value,
+  onChange,
+  unitValue,
+  onUnitChange,
+}: {
+  mode: string;
+  quantity: Quantity;
+  unitGroups: UnitGroup[];
+  value: string;
+  onChange: (newText: string, newValue: number | undefined) => void;
+  unitValue: UnitSelection | null;
+  onUnitChange: (newValue: UnitSelection) => void;
 }) => {
   const { t } = useTranslation();
   const [error, setError] = useState(false);
@@ -20,7 +32,8 @@ const UnitInput = ({ mode, quantity, unitGroups, value, onChange, unitValue, onU
     onChange(v, valid ? n : undefined);
   };
 
-  const noUpDownArrows = (e: KeyboardEvent) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const noUpDownArrows = (e: any) => {
     if (['ArrowDown', 'ArrowUp'].includes(e.code)) {
       e.preventDefault();
     }
@@ -29,10 +42,28 @@ const UnitInput = ({ mode, quantity, unitGroups, value, onChange, unitValue, onU
   return (
     <Grid container spacing={1}>
       <Grid item xs={8}>
-        <TextField type="number" label={t(`main:${mode}.input`)} inputProps={{ style: { textAlign: 'end' }, className: 'no-spinner', onKeyDown: noUpDownArrows }} value={value} onChange={e => updateValue(e.target.value)} error={error} fullWidth />
+        <TextField
+          type="number"
+          label={t(`main:${mode}.input`)}
+          inputProps={{
+            style: { textAlign: 'end' },
+            className: 'no-spinner',
+            onKeyDown: noUpDownArrows,
+          }}
+          value={value}
+          onChange={(e) => updateValue(e.target.value)}
+          error={error}
+          fullWidth
+        />
       </Grid>
       <Grid item xs>
-        <UnitPicker unitGroups={unitGroups} quantity={quantity} value={unitValue} onChange={onUnitChange} allowCustom />
+        <UnitPicker
+          unitGroups={unitGroups}
+          quantity={quantity}
+          value={unitValue}
+          onChange={onUnitChange}
+          allowCustom
+        />
       </Grid>
     </Grid>
   );

@@ -1,6 +1,14 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
+import {
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+} from '@mui/material';
 
 const Help = () => {
   const { t } = useTranslation();
@@ -20,15 +28,23 @@ const Help = () => {
           </TableHead>
           <TableBody>
             <TableRow>
-              <TableCell component="th" scope="row">{t('main:help.mode.difference.name')}</TableCell>
-              <TableCell>{t('main:help.mode.difference.description')}</TableCell>
+              <TableCell component="th" scope="row">
+                {t('main:help.mode.difference.name')}
+              </TableCell>
+              <TableCell>
+                {t('main:help.mode.difference.description')}
+              </TableCell>
             </TableRow>
             <TableRow>
-              <TableCell component="th" scope="row">{t('main:help.mode.additive.name')}</TableCell>
+              <TableCell component="th" scope="row">
+                {t('main:help.mode.additive.name')}
+              </TableCell>
               <TableCell>{t('main:help.mode.additive.description')}</TableCell>
             </TableRow>
             <TableRow>
-              <TableCell component="th" scope="row">{t('main:help.mode.absolute.name')}</TableCell>
+              <TableCell component="th" scope="row">
+                {t('main:help.mode.absolute.name')}
+              </TableCell>
               <TableCell>{t('main:help.mode.absolute.description')}</TableCell>
             </TableRow>
           </TableBody>

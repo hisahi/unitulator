@@ -2,28 +2,41 @@ import { Unit } from './unit';
 import { PREFIX } from '../data/prefix';
 
 interface UnitSpecificationLiteral {
-  symbol?: string
-  prefix?: string
-  unit: string
-  power?: number
+  symbol?: string;
+  prefix?: string;
+  unit: string;
+  power?: number;
 }
 
 interface UnitSpecificationFraction {
-  symbol?: string
-  numerator: UnitSpecification[]
-  denominator: UnitSpecification[]
+  symbol?: string;
+  numerator: UnitSpecification[];
+  denominator: UnitSpecification[];
 }
 
-export type UnitSpecification = string | UnitSpecificationLiteral | UnitSpecificationFraction;
+export type UnitSpecification =
+  | string
+  | UnitSpecificationLiteral
+  | UnitSpecificationFraction;
 
-const isUnitSpecificationLiteral = (spec: UnitSpecification): spec is UnitSpecificationLiteral => typeof spec !== 'string' && 'unit' in spec;
-const isUnitSpecificationFraction = (spec: UnitSpecification): spec is UnitSpecificationFraction => typeof spec !== 'string' && 'numerator' in spec;
+const isUnitSpecificationLiteral = (
+  spec: UnitSpecification
+): spec is UnitSpecificationLiteral =>
+  typeof spec !== 'string' && 'unit' in spec;
+const isUnitSpecificationFraction = (
+  spec: UnitSpecification
+): spec is UnitSpecificationFraction =>
+  typeof spec !== 'string' && 'numerator' in spec;
 
-export const unitSpecificationToUnit = (spec: UnitSpecification, unitMap: { [key: string]: Unit }): Unit => {
+export const unitSpecificationToUnit = (
+  spec: UnitSpecification,
+  unitMap: { [key: string]: Unit }
+): Unit => {
   if (typeof spec === 'string') {
     if (!unitMap[spec]) throw new Error(`unrecognized unit ${spec}`);
     return unitMap[spec];
-  } if (isUnitSpecificationLiteral(spec)) {
+  }
+  if (isUnitSpecificationLiteral(spec)) {
     const { prefix, unit, symbol, power } = spec;
     let newUnit = unitMap[unit];
     if (!newUnit) throw new Error(`unrecognized unit ${unit}`);
@@ -37,9 +50,14 @@ export const unitSpecificationToUnit = (spec: UnitSpecification, unitMap: { [key
       newUnit = { ...newUnit, symbol };
     }
     return newUnit;
-  } if (isUnitSpecificationFraction(spec)) {
+  }
+  if (isUnitSpecificationFraction(spec)) {
     const { symbol, numerator, denominator } = spec;
-    return Unit.derivedUnitWithSymbol(symbol, numerator.map(s => unitSpecificationToUnit(s, unitMap)), denominator.map(s => unitSpecificationToUnit(s, unitMap)));
+    return Unit.derivedUnitWithSymbol(
+      symbol,
+      numerator.map((s) => unitSpecificationToUnit(s, unitMap)),
+      denominator.map((s) => unitSpecificationToUnit(s, unitMap))
+    );
   }
   throw new Error('unrecognized specification');
 };
