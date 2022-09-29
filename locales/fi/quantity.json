@@ -69,7 +69,7 @@
   "currentDensity": "Sähkövirran tiheys",
   "electricChargeDensity": "Sähkövaraustiheys",
   "linearChargeDensity": "Lineaarinen varaustiheys",
-  "magneticDipoleMoment": "Magnetic dipole moment",
+  "magneticDipoleMoment": "Magneettinen dipolimomentti",
   "electronMobility": "Elektroniliikkuvuus",
   "radiationExposure": "Ionisoiva säteilyannos",
 
@@ -90,7 +90,7 @@
   "molarConductivity": "Molaarinen konduktiivisuus",
   "molality": "Molaalisuus",
   "molarMass": "Moolimassa",
-  "catalyticEfficiency": "Catalytic efficiency",
+  "catalyticEfficiency": "Katalyyttinen teho",
 
   "luminousFlux": "Valovirta",
   "luminousEnergy": "Valoenergia",
