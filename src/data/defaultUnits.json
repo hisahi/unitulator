@@ -1,0 +1,52 @@
+{
+  "time": [
+    "day",
+    "hour",
+    "minute",
+    "second",
+    { "prefix": "milli", "unit": "second" }
+  ],
+  "mass": [
+    { "prefix": "kilo", "unit": "gram" },
+    "pound",
+    "metricTon",
+    "gram",
+    "ounce"
+  ],
+  "length": [
+    "meter",
+    { "prefix": "kilo", "unit": "meter" },
+    { "prefix": "centi", "unit": "meter" },
+    { "prefix": "milli", "unit": "meter" },
+    "inch",
+    "foot",
+    "yard",
+    "mile"
+  ],
+  "speed": [
+    { "numerator": ["meter"], "denominator": ["second"] },
+    { "numerator": [{ "prefix": "kilo", "unit": "meter" }], "denominator": ["hour"] },
+    { "symbol": "mph", "numerator": ["mile"], "denominator": ["hour"] },
+    "knot"
+  ],
+  "area": [
+    { "unit": "meter", "power": 2 },
+    { "symbol": "sq ft", "unit": "foot", "power": 2 },
+    { "symbol": "sq yd", "unit": "yard", "power": 2 },
+    { "prefix": "kilo", "unit": "meter", "power": 2 },
+    { "symbol": "sq mi", "unit": "mile", "power": 2 },
+    "hectare",
+    { "prefix": "milli", "unit": "meter", "power": 2 },
+    { "symbol": "sq in", "unit": "inch", "power": 2 }
+  ],
+  "volume": [
+    "liter",
+    { "unit": "meter", "power": 3 },
+    "imperialGallon",
+    "imperialQuart",
+    "imperialFluidOunce",
+    "customaryGallon",
+    "customaryQuart",
+    "customaryFluidOunce"
+  ]
+}

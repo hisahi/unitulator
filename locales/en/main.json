@@ -1,0 +1,95 @@
+{
+  "appName": "Unitulator",
+
+  "unitOptionFormat": "{{name}} ({{symbol}})",
+  "prefixOptionFormat": "{{name}} ({{symbol}})",
+  "unitReciprocal": "reciprocal {{denominator}}",
+  "unitPer": "{{numerator}} per {{denominator}}",
+  "quantityCustom": "Custom ({{name}})",
+
+  "ok": "OK",
+  "cancel": "Cancel",
+  "delete": "Delete",
+  "unit": "Unit",
+  "quantity": "Quantity",
+
+  "menu.help": "Help",
+  "menu.difference": "Difference",
+  "menu.additive": "Additive",
+  "menu.absolute": "Absolute",
+  "menu.logarithm": "Logarithm",
+  "menu.percent": "Percentage",
+
+  "quantitiesRecommended": "Recommended",
+  "quantitiesRest": "Other",
+  "quantitiesCustom": "Custom",
+
+  "unitsRecommended": "Recommended",
+  "unitsRest": "Other",
+  "unitsCustom": "Custom",
+
+  "difference.title": "Difference Mode",
+  "difference.description": "Converts values representing differences from one unit to any number of units. This works with most quantities, but for temperatures, you may want to use Absolute instead.",
+  "difference.input": "Value",
+  "difference.output": "Equals",
+  "difference.swapUnitOnly": "Swap with input, unit only",
+  "difference.swapUnitAndValue": "Swap with input, unit and value",
+  "difference.addOutput": "Add new output",
+
+  "additive.title": "Additive Mode",
+  "additive.description": "Adds the inputs together and then converts them into the outputs, rounding all but the last output down. For example, this can be used to convert from meters and centimetres to feet and inches, or vice versa.",
+  "additive.input": "Input",
+  "additive.output": "Output",
+  "additive.swapInputsAndOutputs": "Swap inputs and outputs",
+  "additive.addInput": "Add new input",
+  "additive.addOutput": "Add new output",
+
+  "absolute.title": "Absolute Mode",
+  "absolute.description": "Converts absolute values from one unit to any number of units. This differs from difference mode in that the values are considered absolute rather than differences.",
+  "absolute.input": "Value",
+  "absolute.output": "Equals",
+  "absolute.swapUnitOnly": "Swap with input, unit only",
+  "absolute.swapUnitAndValue": "Swap with input, unit and value",
+  "absolute.addOutput": "Add new output",
+
+  "help.title": "Help",
+
+  "customUnitDialog.title": "Custom Unit for: {{quantity}}",
+  "customUnitDialog.symbol": "Symbol",
+  "customUnitDialog.name": "Unit name",
+  "customUnitDialog.prefix": "Prefix",
+  "customUnitDialog.noPrefix": "none",
+  "customUnitDialog.power": "Power",
+  "customUnitDialog.set": "Set",
+  "customUnitDialog.multiply": "Multiply",
+  "customUnitDialog.divide": "Divide",
+  "customUnitDialog.simplify": "Simplify",
+  "customUnitDialog.quantitiesMustMatch": "The unit must represent the selected quantity.",
+  "customUnitDialog.source": "Source",
+
+  "customQuantityDialog.title": "Custom Quantity",
+  "customQuantityDialog.name": "Name",
+  "customQuantityDialog.formula": "Formula",
+  "customQuantityDialog.power": "Power",
+  "customQuantityDialog.set": "Set",
+  "customQuantityDialog.multiply": "Multiply",
+  "customQuantityDialog.divide": "Divide",
+  "customQuantityDialog.simplify": "Simplify",
+  "customQuantityDialog.source": "Source",
+
+  "help.description": "Unitulator is a unit converter that converts values between units.",
+
+  "help.modes": "It comes with several different modes:",
+  "help.modes.mode": "Mode",
+  "help.modes.description": "Description",
+
+  "help.mode.difference.name": "Difference",
+  "help.mode.additive.name": "Additive",
+  "help.mode.absolute.name": "Absolute",
+
+  "help.mode.difference.description": "The default mode. Converts between differences in a certain quantity. This is the correct mode for most quantities, like lengths or periods of time. For temperatures, the mode converts differences rather than absolute values. For example, 5 degrees Celsius is converted into 9 degrees Fahrenheit (since a 5 degree Celsius difference is a 9 degree Fahrenheit difference).",
+  "help.mode.additive.description": "Allows multiple inputs to be added together and returns multiple outputs in steps. This mode can be used to, for example, convert meters and centimeters to feet and inches, or vice versa.",
+  "help.mode.absolute.description": "Converts between absolute values. Mainly used for temperatures; for example, converts 5 degrees Celsius into 41 degrees Fahrenheit.",
+
+  "help.customize": "Custom quantities and units can be specified as well. Units can be specified as derived from other units. In future, specifying units as multiples of others will also be supported."
+}

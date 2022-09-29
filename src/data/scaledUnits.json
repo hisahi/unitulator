@@ -1,0 +1,135 @@
+[
+  { "name": "minute", "symbol": "min",
+    "scaleFraction": "60", "baseUnit": "second" 
+  },
+  { "name": "hour", "symbol": "h",
+    "scaleFraction": "60", "baseUnit": "minute"
+  },
+  { "name": "day", "symbol": "d",
+    "scaleFraction": "24", "baseUnit": "hour"
+  },
+  { "name": "week", "symbol": "wk",
+    "scaleFraction": "7", "baseUnit": "day"
+  },
+  { "name": "annum", "symbol": "a",
+    "scaleFraction": "365.2425", "baseUnit": "day"
+  },
+
+  { "name": "metricTon", "symbol": "t",
+    "scaleFraction": "1000", "baseUnit": { "prefix": "kilo", "unit": "gram" }
+  },
+  { "name": "pound", "symbol": "lb",
+    "scaleFraction": "0.45359237", "baseUnit": { "prefix": "kilo", "unit": "gram" }
+  },
+  { "name": "ounce", "symbol": "oz",
+    "scaleFraction": "1/16", "baseUnit": "pound"
+  },
+  { "name": "stone", "symbol": "st",
+    "scaleFraction": "14", "baseUnit": "pound"
+  },
+
+  { "name": "inch", "symbol": "in",
+    "scaleFraction": "127/5000", "baseUnit": "meter"
+  },
+  { "name": "foot", "symbol": "ft",
+    "scaleFraction": "12", "baseUnit": "inch"
+  },
+  { "name": "yard", "symbol": "yd",
+    "scaleFraction": "3", "baseUnit": "foot"
+  },
+  { "name": "mile", "symbol": "mi",
+    "scaleFraction": "1760", "baseUnit": "yard"
+  },
+  { "name": "milliInch", "symbol": "mil",
+    "scaleFraction": "1/1000", "baseUnit": "inch"
+  },
+  { "name": "angstrom", "symbol": "\u00c5",
+    "scaleFraction": "1/10000000000", "baseUnit": "meter"
+  },
+  { "name": "nauticalMile", "symbol": "nmi",
+    "scaleFraction": "1852", "baseUnit": "meter"
+  },
+  { "name": "astronomicalUnit", "symbol": "AU",
+    "scaleFraction": "149597870700", "baseUnit": "meter"
+  },
+  { "name": "lightYear", "symbol": "ly",
+    "scaleFraction": "9460730472580800", "baseUnit": "meter"
+  },
+  { "name": "parsec", "symbol": "pc",
+    "scaleFraction": "648000", "scaleConstant": "pi_inv", "baseUnit": "astronomicalUnit"
+  },
+
+  { "name": "celsius", "symbol": "\u00b0C",
+    "scaleFraction": "1", "baseUnit": "kelvin" 
+  },
+  { "name": "fahrenheit", "symbol": "\u00b0F",
+    "scaleFraction": "5/9", "baseUnit": "kelvin" 
+  },
+  { "name": "rankine", "symbol": "\u00b0Ra",
+    "scaleFraction": "1", "baseUnit": "fahrenheit" 
+  },
+
+  { "name": "degree", "symbol": "\u00b0",
+    "scaleFraction": "1/180", "scaleConstant": "pi", "baseUnit": "radian"
+  },
+  { "name": "gradian", "symbol": "grad",
+    "scaleFraction": "1/200", "scaleConstant": "pi", "baseUnit": "radian"
+  },
+  { "name": "arcminute", "symbol": "'",
+    "scaleFraction": "1/60", "baseUnit": "degree"
+  },
+  { "name": "arcsecond", "symbol": "\"",
+    "scaleFraction": "1/60", "baseUnit": "arcminute"
+  },
+
+  { "name": "are", "symbol": "are",
+    "scaleFraction": "100", "baseUnit": { "unit": "meter", "power": 2 }
+  },
+  { "name": "hectare", "symbol": "ha",
+    "scaleFraction": "10000", "baseUnit": { "unit": "meter", "power": 2 }
+  },
+  { "name": "acre", "symbol": "ac",
+    "scaleFraction": "4840", "baseUnit": { "unit": "yard", "power": 2 }
+  },
+
+  { "name": "knot", "symbol": "kn",
+    "scaleFraction": "1", "baseUnit": { "numerator": ["nauticalMile"], "denominator": ["hour"] }
+  },
+
+  { "name": "liter", "symbol": "l",
+    "scaleFraction": "1", "baseUnit": { "prefix": "deci", "unit": "meter", "power": 3 }
+  },
+  { "name": "cubicCentimeter", "symbol": "cc",
+    "scaleFraction": "1", "baseUnit": { "prefix": "centi", "unit": "meter", "power": 3 }
+  },
+  { "name": "imperialGallon", "symbol": "imp gal",
+    "scaleFraction": "4.54609", "baseUnit": "liter"
+  },
+  { "name": "imperialQuart", "symbol": "imp qt",
+    "scaleFraction": "1/4", "baseUnit": "imperialGallon"
+  },
+  { "name": "imperialPint", "symbol": "imp pt",
+    "scaleFraction": "1/2", "baseUnit": "imperialQuart"
+  },
+  { "name": "imperialFluidOunce", "symbol": "imp fl oz",
+    "scaleFraction": "1/20", "baseUnit": "imperialPint"
+  },
+  { "name": "customaryGallon", "symbol": "US gal",
+    "scaleFraction": "231", "baseUnit": { "unit": "inch", "power": 3 } 
+  },
+  { "name": "customaryQuart", "symbol": "US qt",
+    "scaleFraction": "1/4", "baseUnit": "customaryGallon"
+  },
+  { "name": "customaryPint", "symbol": "US pt",
+    "scaleFraction": "1/8", "baseUnit": "customaryGallon"
+  },
+  { "name": "customaryFluidOunce", "symbol": "US fl oz",
+    "scaleFraction": "1/32", "baseUnit": "customaryQuart"
+  },
+  { "name": "customaryDryGallon", "symbol": "US dry gal",
+    "scaleFraction": "268.8025", "baseUnit": { "unit": "inch", "power": 3 } 
+  },
+  { "name": "customaryDryQuart", "symbol": "US dry qt",
+    "scaleFraction": "1/4", "baseUnit": "customaryDryGallon"
+  }
+]

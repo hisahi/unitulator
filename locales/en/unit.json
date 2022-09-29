@@ -1,0 +1,73 @@
+{
+  "hertz": "hertz",
+  "newton": "newton",
+  "pascal": "pascal",
+  "joule": "joule",
+  "watt": "watt",
+
+  "coulomb": "coulomb",
+  "volt": "volt",
+  "farad": "farad",
+  "ohm": "ohm",
+  "siemens": "siemens",
+  "weber": "weber",
+  "tesla": "tesla",
+  "henry": "henry",
+
+  "lumen": "lumen",
+  "lux": "lux",
+
+  "becquerel": "becquerel",
+  "gray": "gray",
+  "katal": "katal",
+
+  "minute": "minute",
+  "hour": "hour",
+  "day": "day",
+  "week": "week",
+  "annum": "annum (average Gregorian year)",
+
+  "metricTon": "metric ton",
+  "pound": "pound",
+  "ounce": "ounce",
+  "stone": "stone",
+
+  "inch": "inch",
+  "foot": "foot",
+  "yard": "yard",
+  "mile": "mile",
+  "milliInch": "mil",
+  "angstrom": "ångström",
+  "nauticalMile": "nautical mile",
+  "astronomicalUnit": "astronomical unit",
+  "lightYear": "light year",
+  "parsec": "parsec",
+
+  "celsius": "celsius",
+  "fahrenheit": "fahrenheit",
+  "rankine": "rankine",
+
+  "degree": "degree",
+  "gradian": "gradian",
+  "arcminute": "arcminute",
+  "arcsecond": "arcsecond",
+
+  "are": "are",
+  "hectare": "hectare",
+  "acre": "acre",
+
+  "knot": "knot",
+
+  "liter": "liter",
+  "cubicCentimeter": "cubic centimeter",
+  "imperialGallon": "imperial gallon",
+  "imperialQuart": "imperial quart",
+  "imperialPint": "imperial pint",
+  "imperialFluidOunce": "imperial fluid ounce",
+  "customaryGallon": "US gallon",
+  "customaryQuart": "US quart",
+  "customaryPint": "US pint",
+  "customaryFluidOunce": "US fluid ounce",
+  "customaryDryGallon": "US dry gallon",
+  "customaryDryQuart": "US dry quart"
+}
