@@ -21,7 +21,7 @@
   "waveNumber": "Aaltoluku",
   "specificVolume": "Ominaistilavuus",
   "density": "Tiheys",
-  "areaDensity": "Aluetiheys",
+  "areaDensity": "Pinta-alamassa",
   "frequencyDrift": "Taajuusvaihtelu",
   "fuelEfficiency": "Polttoaineenkulutus",
 
@@ -42,7 +42,7 @@
 
   "kinematicViscosity": "Kinemaattinen viskositeetti",
   "dynamicViscosity": "Dynaaminen viskositeetti",
-  "linearMassDensity": "Lineaarinen massatiheys",
+  "linearMassDensity": "Pituusmassa (lineaarinen massatiheys)",
   "volumetricFlow": "Virtaama (tilavuusvirta)",
   "massFlow": "Massavirta",
   "energyFluxDensity": "Energiavuon tiheys",
