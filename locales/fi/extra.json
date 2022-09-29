@@ -1,0 +1,83 @@
+{
+  "unit_ine.second": "sekunnissa",
+  "unit_ine.meter": "metrissä",
+  "unit_ine.gram": "grammassa",
+  "unit_ine.ampere": "ampeerissa",
+  "unit_ine.kelvin": "kelvinissä",
+  "unit_ine.mole": "moolissa",
+  "unit_ine.candela": "kandelassa",
+  "unit_ine.radian": "radiaanissa",
+  "unit_ine.steradian": "steradiaanissa",
+
+  "unit_ine.hertz": "hertsissa",
+  "unit_ine.newton": "newtonissa",
+  "unit_ine.pascal": "pascalissa",
+  "unit_ine.joule": "joulessa",
+  "unit_ine.watt": "watissa",
+
+  "unit_ine.coulomb": "coulombissa",
+  "unit_ine.volt": "voltissa",
+  "unit_ine.farad": "faradissa",
+  "unit_ine.ohm": "ohmissa",
+  "unit_ine.siemens": "siemensissä",
+  "unit_ine.weber": "weberissö",
+  "unit_ine.tesla": "teslassa",
+  "unit_ine.henry": "henryssä",
+
+  "unit_ine.lumen": "luumenissa",
+  "unit_ine.lux": "luksissa",
+
+  "unit_ine.becquerel": "becquerelissa",
+  "unit_ine.gray": "grayssä",
+  "unit_ine.katal": "katalissa",
+
+  "unit_ine.minute": "minuutissa",
+  "unit_ine.hour": "tunnissa",
+  "unit_ine.day": "päivässa",
+  "unit_ine.week": "viikossa",
+  "unit_ine.annum": "vuodessa",
+
+  "unit_ine.metricTon": "tonnissa",
+  "unit_ine.pound": "naulassa",
+  "unit_ine.ounce": "unssissa",
+  "unit_ine.stone": "stonessa",
+
+  "unit_ine.inch": "tuumassa",
+  "unit_ine.foot": "jalassa",
+  "unit_ine.yard": "jaardissa",
+  "unit_ine.mile": "mailissa",
+  "unit_ine.milliInch": "millituumassa",
+  "unit_ine.angstrom": "ångströmissä",
+  "unit_ine.nauticalMile": "meripeninkulmassa",
+  "unit_ine.astronomicalUnit": "astronomisessa yksikössä",
+  "unit_ine.lightYear": "valovuodessa",
+  "unit_ine.parsec": "parsekissa",
+
+  "unit_ine.celsius": "celsiusssa",
+  "unit_ine.fahrenheit": "fahrenheitssa",
+  "unit_ine.rankine": "rankinessa",
+
+  "unit_ine.degree": "astessa",
+  "unit_ine.gradian": "gradiaanissa",
+  "unit_ine.arcminute": "kaariminuuttissa",
+  "unit_ine.arcsecond": "kaarisekuntissa",
+
+  "unit_ine.are": "aarissa",
+  "unit_ine.hectare": "hehtaarissa",
+  "unit_ine.acre": "eekkerissä",
+
+  "unit_ine.knot": "solmussa",
+
+  "unit_ine.liter": "litrassa",
+  "unit_ine.cubicCentimeter": "kuutiosenttimetrissä",
+  "unit_ine.imperialGallon": "brittiläisessä gallonassa",
+  "unit_ine.imperialQuart": "brittiläisessä neljännesgallonassa",
+  "unit_ine.imperialPint": "brittiläisessä pintissä",
+  "unit_ine.imperialFluidOunce": "brittiläisessä nesteunssissa",
+  "unit_ine.customaryGallon": "amerikkalaisessa gallonassa",
+  "unit_ine.customaryQuart": "amerikkalaisessa neljännesgallonassa",
+  "unit_ine.customaryPint": "amerikkalaisessa pintissä",
+  "unit_ine.customaryFluidOunce": "amerikkalaisessa nesteunssissa",
+  "unit_ine.customaryDryGallon": "amerikkalaisessa kuivassa gallonassa",
+  "unit_ine.customaryDryQuart": "amerikkalaisessa kuiva ssaneljännesgallonassa"
+}

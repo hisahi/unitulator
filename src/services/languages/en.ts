@@ -22,7 +22,10 @@ const formatPower = (power: bigint | undefined): [string, string] => {
   if (power <= 1) return ['', ''];
   if (power >= 4) return ['', ` to the ${formatOrdinal(power)} power`];
   return [`${['square', 'cubic'][Number(power) - 2]} `, ''];
-};
+}
+
+const getPrefix = (prefix: string) => i18n.t(`prefix:${prefix}`) ?? prefix;
+const getUnit = (unit: string) => i18n.t(`unit:${unit}`) ?? unit;
 
 export const getLocalizedUnitName = (token: UnitToken): string => {
   if (isUnitTokenFraction(token)) {
@@ -40,9 +43,9 @@ export const getLocalizedUnitName = (token: UnitToken): string => {
     return token.product.map((t) => getLocalizedUnitName(t)).join('-');
   }
   if (isUnitTokenLiteral(token)) {
-    const prefix = token.prefix ? `${token.prefix}` : '';
+    const prefix = token.prefix ? `${getPrefix(token.prefix)}` : '';
     const [powerPrefix, powerSuffix] = formatPower(token.power);
-    return powerPrefix + prefix + token.unit + powerSuffix;
+    return powerPrefix + prefix + getUnit(token.unit) + powerSuffix;
   }
   throw new Error('invalid token');
 };

@@ -9,13 +9,13 @@ import {
 import { parenthesize } from '../core/util';
 
 import { getLocalizedUnitName as getLocalizedUnitName_en } from './languages/en';
-// import { getLocalizedUnitName as getLocalizedUnitName_fi } from './languages/fi';
+import { getLocalizedUnitName as getLocalizedUnitName_fi } from './languages/fi';
 
 const unitNameToText_impl: {
   [languageCode: string]: (unit: UnitToken) => string;
 } = {
   en: getLocalizedUnitName_en,
-  // 'fi': unitNameToText_fi
+  fi: getLocalizedUnitName_fi
 };
 
 const getLocalizedUnitName_default = (token: UnitToken): string => {

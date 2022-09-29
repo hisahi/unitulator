@@ -6,10 +6,16 @@ i18next
   .use(initReactI18next)
   .use(HttpApi)
   .init({
-    lng: navigator.language,
+    lng: new URL(document.location.href).searchParams.get('lang') ?? navigator.language,
     fallbackLng: 'en',
     nonExplicitSupportedLngs: true,
-    ns: ['main', 'quantity', 'unit'],
+    ns: [
+      'main',
+      'prefix',
+      'quantity',
+      'unit',
+      'extra'
+    ],
     defaultNS: 'main',
     interpolation: {
       escapeValue: false,

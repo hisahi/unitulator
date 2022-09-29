@@ -47,6 +47,7 @@
     "imperialFluidOunce",
     "customaryGallon",
     "customaryQuart",
-    "customaryFluidOunce"
+    "customaryFluidOunce",
+    { "symbol": "cc", "prefix": "centi", "unit": "meter", "power": 3 }
   ]
 }

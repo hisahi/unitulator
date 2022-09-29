@@ -1,5 +1,6 @@
 import { Unit } from './unit';
 import { getScaleBetweenUnits } from './convert';
+import { powerOfTen } from './fraction';
 
 export interface Significance {
   decimals: number;
@@ -34,7 +35,7 @@ const getDecimalPoint = (format: Intl.NumberFormat): string =>
   '.';
 
 const getGroupSeparator = (format: Intl.NumberFormat): string =>
-  format.formatToParts(1n ** 100n).find((part) => part.type === 'group')
+  format.formatToParts(powerOfTen(100n)).find((part) => part.type === 'group')
     ?.value ?? ',';
 
 const SIGNIFICANCE_BUFFER = 2;

@@ -332,6 +332,8 @@ const makeConstruction = (
     .filter((token) => token.unit)
     .map(shallowCopy<UnitTokenLiteral>);
 
+  combinePowers(numeratorTokens);
+  combinePowers(denominatorTokens);  
   simplifyPrefixes(numeratorTokens, denominatorTokens);
   cancelTokens(numeratorTokens, denominatorTokens);
 
@@ -380,6 +382,8 @@ export const parseUnitTokenFromName = (name: string): UnitToken => {
     const numeratorTokens = parseUnitTokenProductFromName(numeratorString);
     const denominatorTokens = parseUnitTokenProductFromName(denumeratorString);
 
+    combinePowers(numeratorTokens);
+    combinePowers(denominatorTokens);  
     simplifyPrefixes(numeratorTokens, denominatorTokens);
     cancelTokens(numeratorTokens, denominatorTokens);
 

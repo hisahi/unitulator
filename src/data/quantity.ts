@@ -82,7 +82,7 @@ export const QUANTITIES: Quantity[] = [
   Q('resistance',                   [[g, 1], [m, 2], [s, -3], [A, -2]]),
   Q('resistivity',                  [[g, 1], [m, 3], [s, -3], [A, -2]]),
   Q('electricConductivity',         [[s, 3], [A, 2], [g, -1], [m, -3]]),
-  Q('permitivity',                  [[s, 4], [A, 2], [g, -1], [m, -3]]),
+  Q('permittivity',                 [[s, 4], [A, 2], [g, -1], [m, -3]]),
   Q('conductance',                  [[s, 3], [A, 2], [g, -1], [m, -2]]),
   Q('electricFieldStrength',        [[g, 1], [m, 1], [s, -3], [A, -1]]),
   Q('inductance',                   [[g, 1], [m, 2], [s, -2], [A, -2]]),

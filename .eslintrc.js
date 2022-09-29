@@ -19,6 +19,7 @@ module.exports = {
   'parser': '@typescript-eslint/parser',
   'parserOptions': {
     'ecmaVersion': 'latest',
+    'project': 'tsconfig.json',
     'sourceType': 'module'
   },
   'plugins': [
@@ -27,7 +28,8 @@ module.exports = {
     'prettier'
   ],
   'rules': {
+    'prettier/prettier': 'error',
     '@typescript-eslint/no-non-null-assertion': 'off',
-    'prettier/prettier': 'error'
+    '@typescript-eslint/prefer-nullish-coalescing': 'warn'
   }
 };

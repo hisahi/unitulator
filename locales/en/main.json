@@ -52,8 +52,6 @@
   "absolute.swapUnitAndValue": "Swap with input, unit and value",
   "absolute.addOutput": "Add new output",
 
-  "help.title": "Help",
-
   "customUnitDialog.title": "Custom Unit for: {{quantity}}",
   "customUnitDialog.symbol": "Symbol",
   "customUnitDialog.name": "Unit name",
@@ -77,7 +75,8 @@
   "customQuantityDialog.simplify": "Simplify",
   "customQuantityDialog.source": "Source",
 
-  "help.description": "Unitulator is a unit converter that converts values between units.",
+  "help.title": "Help",
+  "help.description": "Unitulator is a web app that converts values between units.",
 
   "help.modes": "It comes with several different modes:",
   "help.modes.mode": "Mode",

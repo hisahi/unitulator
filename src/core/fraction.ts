@@ -42,14 +42,28 @@ export const integerToFraction = (integer: bigint): Fraction => ({
   denominator: 1n,
 });
 
+const powerBigInt = (base: bigint, power: bigint): bigint => {
+  // return base ** power;
+  if (!power) return 1n;
+  let x = base;
+  let y = 1n;
+  let p = power;
+  while (p > 1n) {
+    if (p % 2n) y = x * y;
+    x *= x;
+    p /= 2n;
+  }
+  return x * y;
+}
+
 export const powerOfTwo = (power: number | bigint): bigint => {
   if (typeof power === 'number') power = BigInt(power);
-  return 2n ** power;
+  return powerBigInt(2n, power);
 };
 
 export const powerOfTen = (power: number | bigint): bigint => {
   if (typeof power === 'number') power = BigInt(power);
-  return 10n ** power;
+  return powerBigInt(10n, power);
 };
 
 export const powerOfTenFraction = (power: number | bigint): Fraction => {

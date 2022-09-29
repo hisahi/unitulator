@@ -1,0 +1,23 @@
+{
+  "yotta": "jotta",
+  "zetta": "tsetta",
+  "exa": "eksa",
+  "peta": "peta",
+  "tera": "tera",
+  "giga": "giga",
+  "mega": "mega",
+  "kilo": "kilo",
+  "hecto": "hekto",
+  "deca": "deka",
+
+  "deci": "desi",
+  "centi": "sentti",
+  "milli": "milli",
+  "micro": "mikro",
+  "nano": "nano",
+  "pico": "piko",
+  "femto": "femto",
+  "atto": "atto",
+  "zepto": "tsepto",
+  "yocto": "jokto"
+}

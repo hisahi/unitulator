@@ -3,7 +3,7 @@
 
   "time": "Time",
   "length": "Length",
-  "mass": "Mass",
+  "mass": "Mass (weight)",
   "electricCurrent": "Electric current",
   "temperature": "Temperature",
   "amountOfSubstance": "Amount of substance",
@@ -62,7 +62,7 @@
   "resistance": "Resistance",
   "resistivity": "Resistivity",
   "electricConductivity": "Electric conductivity",
-  "permitivity": "Permitivity",
+  "permittivity": "Permittivity",
   "conductance": "Conductance",
   "electricFieldStrength": "Electric field strength",
   "inductance": "Inductance",

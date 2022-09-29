@@ -11,7 +11,7 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: "static/index.html",
+      template: "src/index.html",
     }),
     new ForkTsCheckerWebpackPlugin({
       async: false
@@ -19,8 +19,12 @@ module.exports = {
     new CopyWebpackPlugin({
       patterns: [
         {
-          from: path.resolve(__dirname, "locales"),
+          from: path.resolve(__dirname, "static"),
           to: path.resolve(__dirname, "public")
+        },
+        {
+          from: path.resolve(__dirname, "locales"),
+          to: path.resolve(__dirname, "public", "locales")
         }
       ]
     }),

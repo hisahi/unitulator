@@ -1,3 +1,94 @@
 {
-  "appName": "Unitulator"
+  "appName": "Unitulator",
+
+  "unitOptionFormat": "{{name}} ({{symbol}})",
+  "prefixOptionFormat": "{{name}} ({{symbol}})",
+  "unitReciprocal": "yksi {{denominator}}",
+  "unitPer": "{{numerator}} {{denominator}}",
+  "quantityCustom": "Mukautettu ({{name}})",
+
+  "ok": "OK",
+  "cancel": "Peruuta",
+  "delete": "Poista",
+  "unit": "Yksikkö",
+  "quantity": "Suure",
+
+  "menu.help": "Ohje",
+  "menu.difference": "Erotus",
+  "menu.additive": "Yhteenlasku",
+  "menu.absolute": "Suora",
+  "menu.logarithm": "Logaritmi",
+  "menu.percent": "Prosentti",
+
+  "quantitiesRecommended": "Ehdotukset",
+  "quantitiesRest": "Muut",
+  "quantitiesCustom": "Mukautettu",
+
+  "unitsRecommended": "Ehdotukset",
+  "unitsRest": "Muut",
+  "unitsCustom": "Mukautettu",
+
+  "difference.title": "Erotustila",
+  "difference.description": "Muuntaa erotusarvoja muihin yksiköihin. Tämä tila sopii useimmille suureille, mutta lämpötilojen muuntamiseen kannattaa harkita suoraa tilaa.",
+  "difference.input": "Arvo",
+  "difference.output": "On yhtä kuin",
+  "difference.swapUnitOnly": "Vaihda syöte- ja tulosyksiköt",
+  "difference.swapUnitAndValue": "Vaihda syöte- ja tulosyksiköt ja -arvot",
+  "difference.addOutput": "Lisää tulosyksikkö",
+
+  "additive.title": "Yhteenlaskutila",
+  "additive.description": "Laskee annetut syötteet yhteen ja muuntaa ne tulosyksiköiksi pyöristäen kaikki pienintä yksikköä edeltävät lukemat. Tämän tilan avulla voi esimerkiksi muuntaa jalat ja tuumat metreiksi ja senttimetreiksi.",
+  "additive.input": "Syöte",
+  "additive.output": "Tulos",
+  "additive.swapInputsAndOutputs": "Vaihda syöte- ja tulosyksiköt",
+  "additive.addInput": "Lisää syöteyksikkö",
+  "additive.addOutput": "Lisää tulosyksikkö",
+
+  "absolute.title": "Suora tila",
+  "absolute.description": "Muuntaa arvoja suoraan muihin yksiköihin. Toisin kuin erotustilassa, annettuja lukuja kohdellaan sellaisinaan eikä erotuksina.",
+  "absolute.input": "Arvo",
+  "absolute.output": "On yhtä kuin",
+  "absolute.swapUnitOnly": "Vaihda syöte- ja tulosyksiköt",
+  "absolute.swapUnitAndValue": "Vaihda syöte- ja tulosyksiköt ja -arvot",
+  "absolute.addOutput": "Lisää tulosyksikkö",
+
+  "customUnitDialog.title": "Mukautettu yksikkö: {{quantity}}",
+  "customUnitDialog.symbol": "Tunnus",
+  "customUnitDialog.name": "Yksikön nimi",
+  "customUnitDialog.prefix": "Kerroin",
+  "customUnitDialog.noPrefix": "ei kerrointa",
+  "customUnitDialog.power": "Potenssi",
+  "customUnitDialog.set": "Aseta",
+  "customUnitDialog.multiply": "Kerro",
+  "customUnitDialog.divide": "Jaa",
+  "customUnitDialog.simplify": "Sievennä",
+  "customUnitDialog.quantitiesMustMatch": "Yksikön on mitattava valittua suuretta.",
+  "customUnitDialog.source": "Lähdekoodi",
+
+  "customQuantityDialog.title": "Mukautettu suure",
+  "customQuantityDialog.name": "Nimi",
+  "customQuantityDialog.formula": "Kaava",
+  "customQuantityDialog.power": "Potenssi",
+  "customQuantityDialog.set": "Aseta",
+  "customQuantityDialog.multiply": "Kerro",
+  "customQuantityDialog.divide": "Jaa",
+  "customQuantityDialog.simplify": "Sievennä",
+  "customQuantityDialog.source": "Lähdekoodi",
+
+  "help.title": "Ohje",
+  "help.description": "Unitulator on yksikköjen muuntamiseen käytettävä sovellus.",
+
+  "help.modes": "Siinä on useampi eri tila:",
+  "help.modes.mode": "Tila",
+  "help.modes.description": "Kuvaus",
+
+  "help.mode.difference.name": "Erotus",
+  "help.mode.additive.name": "Yhteenlasku",
+  "help.mode.absolute.name": "Suora",
+
+  "help.mode.difference.description": "Oletustila, joka muuntaa suureiden mittausarvojen erotuksia. Tämä tila sopii useimmille suurelile, kuten pituuksille tai ajanjaksoille. Lämpötilojen tapauksessa tämä tila muuntaa lämpötiloja erotuksena eikä varsinaisina lukemina. Esimerkiksi 9 Fahrenheit-astetta muunnetaan 5 Celsius-asteeksi, sillä 9 Fahrenheit-asteen ero vastaa 5 Celsius-asteen eroa.",
+  "help.mode.additive.description": "Tässä tilassa voi määrittää useamman syöte- ja tulosyksikön. Syötteet lasketaan yhteen ja tulokset porrastetaan. Tämän tilan avulla voi esimerkiksi muuntaa jalat ja tuumat metreiksi ja senttimetreiksi, tai päinvastoin.",
+  "help.mode.absolute.description": "Muuntaa varsinaisia arvoja. Lämpötilat ovat merkittävin käyttötapaus: esimerkiksi 41 Fahrenheit-asteesta tulee 5 Celsius-astetta.",
+
+  "help.customize": "Voit myös määrittää omia suureita. Yksiköitä voi määrittää itse muiden yksiköiden tuloina ja osamäärinä. Pian mahdollisesti yksiköitä voi myös määrittää vakiokertoimin muista yksiöistä."
 }

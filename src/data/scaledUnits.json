@@ -40,9 +40,6 @@
   { "name": "mile", "symbol": "mi",
     "scaleFraction": "1760", "baseUnit": "yard"
   },
-  { "name": "milliInch", "symbol": "mil",
-    "scaleFraction": "1/1000", "baseUnit": "inch"
-  },
   { "name": "angstrom", "symbol": "\u00c5",
     "scaleFraction": "1/10000000000", "baseUnit": "meter"
   },
@@ -98,9 +95,6 @@
 
   { "name": "liter", "symbol": "l",
     "scaleFraction": "1", "baseUnit": { "prefix": "deci", "unit": "meter", "power": 3 }
-  },
-  { "name": "cubicCentimeter", "symbol": "cc",
-    "scaleFraction": "1", "baseUnit": { "prefix": "centi", "unit": "meter", "power": 3 }
   },
   { "name": "imperialGallon", "symbol": "imp gal",
     "scaleFraction": "4.54609", "baseUnit": "liter"

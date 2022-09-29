@@ -1,3 +1,81 @@
 {
-  
+  "second": "sekunti",
+  "meter": "metri",
+  "gram": "gramma",
+  "ampere": "ampeeri",
+  "kelvin": "kelvin",
+  "mole": "mooli",
+  "candela": "kandela",
+  "radian": "radiaani",
+  "steradian": "steradiaani",
+
+  "hertz": "hertsi",
+  "newton": "newton",
+  "pascal": "pascal",
+  "joule": "joule",
+  "watt": "watti",
+
+  "coulomb": "coulombi",
+  "volt": "voltti",
+  "farad": "faradi",
+  "ohm": "ohmi",
+  "siemens": "siemens",
+  "weber": "weber",
+  "tesla": "tesla",
+  "henry": "henry",
+
+  "lumen": "luumen",
+  "lux": "luksi",
+
+  "becquerel": "becquerel",
+  "gray": "gray",
+  "katal": "katal",
+
+  "minute": "minuutti",
+  "hour": "tunti",
+  "day": "päivä",
+  "week": "viikko",
+  "annum": "vuosi (keskimääräinen gregoriaaninen vuosi)",
+
+  "metricTon": "tonni",
+  "pound": "naula",
+  "ounce": "unssi",
+  "stone": "stone",
+
+  "inch": "tuuma",
+  "foot": "jalka",
+  "yard": "jaardi",
+  "mile": "maili",
+  "angstrom": "ångström",
+  "nauticalMile": "meripeninkulma",
+  "astronomicalUnit": "astronominen yksikkö",
+  "lightYear": "valovuosi",
+  "parsec": "parsek",
+
+  "celsius": "celsius",
+  "fahrenheit": "fahrenheit",
+  "rankine": "rankine",
+
+  "degree": "aste",
+  "gradian": "gradiaani",
+  "arcminute": "kaariminuutti",
+  "arcsecond": "kaarisekunti",
+
+  "are": "aari",
+  "hectare": "hehtaari",
+  "acre": "eekkeri",
+
+  "knot": "solmu",
+
+  "liter": "litra",
+  "imperialGallon": "brittiläinen gallona",
+  "imperialQuart": "brittiläinen neljännesgallona",
+  "imperialPint": "brittiläinen pintti",
+  "imperialFluidOunce": "brittiläinen nesteunssi",
+  "customaryGallon": "amerikkalainen gallona",
+  "customaryQuart": "amerikkalainen neljännesgallona",
+  "customaryPint": "amerikkalainen pintti",
+  "customaryFluidOunce": "amerikkalainen nesteunssi",
+  "customaryDryGallon": "amerikkalainen kuiva gallona (kiinteille aineille)",
+  "customaryDryQuart": "amerikkalainen kuiva neljännesgallona (kiinteille aineille)"
 }

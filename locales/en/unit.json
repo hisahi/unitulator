@@ -1,4 +1,14 @@
 {
+  "second": "second",
+  "meter": "meter",
+  "gram": "gram",
+  "ampere": "ampere",
+  "kelvin": "kelvin",
+  "mole": "mole",
+  "candela": "candela",
+  "radian": "radian",
+  "steradian": "steradian",
+
   "hertz": "hertz",
   "newton": "newton",
   "pascal": "pascal",
@@ -36,7 +46,6 @@
   "foot": "foot",
   "yard": "yard",
   "mile": "mile",
-  "milliInch": "mil",
   "angstrom": "ångström",
   "nauticalMile": "nautical mile",
   "astronomicalUnit": "astronomical unit",
@@ -59,7 +68,6 @@
   "knot": "knot",
 
   "liter": "liter",
-  "cubicCentimeter": "cubic centimeter",
   "imperialGallon": "imperial gallon",
   "imperialQuart": "imperial quart",
   "imperialPint": "imperial pint",
