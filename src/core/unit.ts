@@ -333,7 +333,7 @@ const makeConstruction = (
     .map(shallowCopy<UnitTokenLiteral>);
 
   combinePowers(numeratorTokens);
-  combinePowers(denominatorTokens);  
+  combinePowers(denominatorTokens);
   simplifyPrefixes(numeratorTokens, denominatorTokens);
   cancelTokens(numeratorTokens, denominatorTokens);
 
@@ -383,7 +383,7 @@ export const parseUnitTokenFromName = (name: string): UnitToken => {
     const denominatorTokens = parseUnitTokenProductFromName(denumeratorString);
 
     combinePowers(numeratorTokens);
-    combinePowers(denominatorTokens);  
+    combinePowers(denominatorTokens);
     simplifyPrefixes(numeratorTokens, denominatorTokens);
     cancelTokens(numeratorTokens, denominatorTokens);
 

@@ -15,7 +15,7 @@ const unitNameToText_impl: {
   [languageCode: string]: (unit: UnitToken) => string;
 } = {
   en: getLocalizedUnitName_en,
-  fi: getLocalizedUnitName_fi
+  fi: getLocalizedUnitName_fi,
 };
 
 const getLocalizedUnitName_default = (token: UnitToken): string => {

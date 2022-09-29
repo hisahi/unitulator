@@ -54,7 +54,7 @@ const powerBigInt = (base: bigint, power: bigint): bigint => {
     p /= 2n;
   }
   return x * y;
-}
+};
 
 export const powerOfTwo = (power: number | bigint): bigint => {
   if (typeof power === 'number') power = BigInt(power);

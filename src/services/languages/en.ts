@@ -22,7 +22,7 @@ const formatPower = (power: bigint | undefined): [string, string] => {
   if (power <= 1) return ['', ''];
   if (power >= 4) return ['', ` to the ${formatOrdinal(power)} power`];
   return [`${['square', 'cubic'][Number(power) - 2]} `, ''];
-}
+};
 
 const getPrefix = (prefix: string) => i18n.t(`prefix:${prefix}`) ?? prefix;
 const getUnit = (unit: string) => i18n.t(`unit:${unit}`) ?? unit;
