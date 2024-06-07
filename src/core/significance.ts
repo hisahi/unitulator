@@ -61,7 +61,7 @@ const getRedundantDigits = (value: number, text: string): number => {
       .formatToParts(value)
       .filter((part) => ['integer', 'fraction'].includes(part.type))
       .map((part) => part.value)
-      .join('')
+      .join(''),
   );
   return Math.max(0, inputLength - effectiveLength);
 };
@@ -77,7 +77,7 @@ const largerSignificance = (a: Significance, b: Significance): Significance =>
   significanceToNumber(a) >= significanceToNumber(b) ? a : b;
 
 export const maximumSignificance = (
-  significances: Significance[]
+  significances: Significance[],
 ): Significance =>
   significances
     .slice(1)
@@ -97,13 +97,13 @@ const toInteger = (value: number): bigint => BigInt(Math.round(value));
 const numberToFixed = (
   value: number,
   digits: number,
-  useLocale: boolean
+  useLocale: boolean,
 ): string => {
   digits = Math.max(Math.ceil(digits), DIGITS_ALWAYS) | 0;
   if (digits <= 0) {
     return useLocale
       ? new Intl.NumberFormat(undefined, { maximumFractionDigits: 0 }).format(
-          value
+          value,
         )
       : String(toInteger(value));
   }
@@ -125,7 +125,7 @@ const numberToFixed = (
 export const formatWithSignificance = (
   value: number,
   significance: Significance | null,
-  useLocale: boolean
+  useLocale: boolean,
 ): string => {
   if (!Number.isFinite(value)) return String(value);
   if (significance == null) return numberToString(value, useLocale);
@@ -140,7 +140,7 @@ export const formatWithSignificance = (
 
 const adjustSignificance = (
   significance: Significance,
-  offset: number
+  offset: number,
 ): Significance => ({
   ...significance,
   decimals: significance.decimals + offset,
@@ -151,7 +151,7 @@ export const formatWithSignificanceAndUnits = (
   significance: Significance | null,
   useLocale: boolean,
   fromUnit: Unit,
-  toUnit: Unit
+  toUnit: Unit,
 ): string => {
   const conversionPrecision =
     -Math.log10(getScaleBetweenUnits(fromUnit, toUnit)) + 1;
@@ -160,6 +160,6 @@ export const formatWithSignificanceAndUnits = (
     significance == null
       ? null
       : adjustSignificance(significance, conversionPrecision),
-    useLocale
+    useLocale,
   );
 };

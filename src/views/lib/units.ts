@@ -30,7 +30,7 @@ export const getUnitGroups = (quantity: Quantity): UnitGroup[] => {
         units: UNITS.filter(
           (unit) =>
             !recommendedUnitNames.has(unit.name) &&
-            isCompatibleQuantity(quantity, unit.quantity)
+            isCompatibleQuantity(quantity, unit.quantity),
         ),
       },
     ];
@@ -39,7 +39,7 @@ export const getUnitGroups = (quantity: Quantity): UnitGroup[] => {
       {
         label: '',
         units: UNITS.filter((unit) =>
-          isCompatibleQuantity(quantity, unit.quantity)
+          isCompatibleQuantity(quantity, unit.quantity),
         ),
       },
     ];
@@ -61,7 +61,7 @@ export const getQuantityGroups = (): QuantityGroup[] => {
     (getUnitsForQuantity(quantity).length > 1
       ? commonQuantities
       : otherQuantities
-    ).push(quantity)
+    ).push(quantity),
   );
 
   return [

@@ -49,8 +49,8 @@ const compoundJoin = (parts: string[]): string => {
     } else if (previousPart.match(/\s/)) {
       separator = ' -';
     } else if (
-      previousPart.match(/-/) ||
-      nextPart.match(/-/) ||
+      Boolean(previousPart.match(/-/)) ||
+      Boolean(nextPart.match(/-/)) ||
       hyphenate(previousPart, nextPart)
     ) {
       separator = '-';
@@ -78,7 +78,7 @@ export const generate = (token: UnitToken, reciprocal: boolean): string => {
     const parts = token.product;
     const lastIndex = parts.length - 1;
     return compoundJoin(
-      parts.map((t, index) => generate(t, reciprocal && index === lastIndex))
+      parts.map((t, index) => generate(t, reciprocal && index === lastIndex)),
     );
   }
   if (isUnitTokenLiteral(token)) {

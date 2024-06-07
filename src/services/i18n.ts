@@ -21,6 +21,7 @@ i18next
     debug: false, // process.env.NODE_ENV !== 'production',
   });
 i18next.changeLanguage(
-  new URL(document.location.href).searchParams.get('lang') ?? navigator.language
+  new URL(document.location.href).searchParams.get('lang') ??
+    navigator.language,
 );
 export default i18next;

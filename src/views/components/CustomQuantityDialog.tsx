@@ -46,7 +46,7 @@ const CustomQuantityDialog = ({
   const [quantityName, setQuantityName] = useState(
     defaultQuantity != null
       ? getLocalizedQuantityName(defaultQuantity.name, t)
-      : ''
+      : '',
   );
   const [partQuantity, setPartQuantity] = useState<Quantity | null>(null);
   const [powerValue, setPowerValue] = useState<number>(1);
@@ -98,8 +98,8 @@ const CustomQuantityDialog = ({
             '',
             newQuantity,
             [...Array(powerValue - 1).fill(newQuantity)],
-            []
-          )
+            [],
+          ),
         );
       } else {
         setQuantity(newQuantity);
@@ -115,8 +115,8 @@ const CustomQuantityDialog = ({
           '',
           quantity,
           [...Array(powerValue).fill(newQuantity)],
-          []
-        )
+          [],
+        ),
       );
     }
   };
@@ -129,8 +129,8 @@ const CustomQuantityDialog = ({
           '',
           quantity,
           [],
-          [...Array(powerValue).fill(newQuantity)]
-        )
+          [...Array(powerValue).fill(newQuantity)],
+        ),
       );
     }
   };

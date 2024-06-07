@@ -11,6 +11,8 @@ import { parenthesize } from '../core/util';
 import { getLocalizedUnitName as getLocalizedUnitName_en } from './languages/en';
 import { getLocalizedUnitName as getLocalizedUnitName_fi } from './languages/fi';
 
+const DEFAULT_LANGUAGE = 'en';
+
 const unitNameToText_impl: {
   [languageCode: string]: (unit: UnitToken) => string;
 } = {
@@ -21,7 +23,7 @@ const unitNameToText_impl: {
 const getLocalizedUnitName_default = (token: UnitToken): string => {
   if (isUnitTokenFraction(token)) {
     return `${getLocalizedUnitName_default(token.numerator)} / ${parenthesize(
-      getLocalizedUnitName_default(token.denominator)
+      getLocalizedUnitName_default(token.denominator),
     )}`;
   }
   if (isUnitTokenProduct(token)) {
@@ -36,14 +38,14 @@ const getLocalizedUnitName_default = (token: UnitToken): string => {
 };
 
 export const getLocalizedUnitName_impl = (
-  language: string
+  language: string,
 ): ((token: UnitToken) => string) => {
   if (unitNameToText_impl[language]) return unitNameToText_impl[language];
   return getLocalizedUnitName_default;
 };
 
 export const getLocalizedUnitNameFromToken = (unit: UnitToken): string =>
-  getLocalizedUnitName_impl(i18n.resolvedLanguage)(unit);
+  getLocalizedUnitName_impl(i18n.resolvedLanguage ?? DEFAULT_LANGUAGE)(unit);
 
 export const getLocalizedUnitName = (name: string): string =>
   getLocalizedUnitNameFromToken(parseUnitTokenFromName(name));

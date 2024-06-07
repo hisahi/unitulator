@@ -10,26 +10,19 @@ import {
   ListItemText,
 } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { useSelector, useDispatch } from 'react-redux';
-import {
-  AddRoad,
-  Escalator,
-  Help,
-  Percent,
-  SyncAlt,
-  Thermostat,
-} from '@mui/icons-material';
-import { menuSelector, closeMenu } from '../../states/menu';
+import { AddRoad, Help, SyncAlt, Thermostat } from '@mui/icons-material';
+import { closeMenu, selectIsMenuOpen } from '../../states/menu';
 import { UnitulatorMode, changeMode } from '../../states/mode';
+import { useAppDispatch, useAppSelector } from '../../states/hooks';
 
 const SideBar = () => {
-  const menuState = useSelector(menuSelector);
-  const dispatch = useDispatch();
+  const isMenuOpen = useAppSelector(selectIsMenuOpen);
+  const dispatch = useAppDispatch();
   const { t } = useTranslation();
 
   return (
     <div className="TopBar">
-      <Drawer open={menuState.open} onClose={() => dispatch(closeMenu())}>
+      <Drawer open={isMenuOpen} onClose={() => dispatch(closeMenu())}>
         <Box
           sx={{ width: 250 }}
           role="presentation"

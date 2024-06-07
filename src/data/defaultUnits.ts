@@ -16,7 +16,7 @@ export const getDefaultUnits = (quantity: Quantity): Unit[] | null => {
   const defaultUnitsForQuantity = defaultUnits[quantity.name];
   if (!defaultUnitsForQuantity) return null;
   return defaultUnitsForQuantity.map((unit) =>
-    unitSpecificationToUnit(unit, UNIT)
+    unitSpecificationToUnit(unit, UNIT),
   );
 };
 
@@ -28,5 +28,5 @@ export const getBaseUnitsByQuantity = (): { [quantity: string]: Unit[] } =>
     QUANTITIES.map((quantity) => [
       quantity.name,
       getBaseUnitsForQuantity(quantity),
-    ])
+    ]),
   );

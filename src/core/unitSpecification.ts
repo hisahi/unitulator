@@ -20,17 +20,17 @@ export type UnitSpecification =
   | UnitSpecificationFraction;
 
 const isUnitSpecificationLiteral = (
-  spec: UnitSpecification
+  spec: UnitSpecification,
 ): spec is UnitSpecificationLiteral =>
   typeof spec !== 'string' && 'unit' in spec;
 const isUnitSpecificationFraction = (
-  spec: UnitSpecification
+  spec: UnitSpecification,
 ): spec is UnitSpecificationFraction =>
   typeof spec !== 'string' && 'numerator' in spec;
 
 export const unitSpecificationToUnit = (
   spec: UnitSpecification,
-  unitMap: { [key: string]: Unit }
+  unitMap: { [key: string]: Unit },
 ): Unit => {
   if (typeof spec === 'string') {
     if (!unitMap[spec]) throw new Error(`unrecognized unit ${spec}`);
@@ -56,7 +56,7 @@ export const unitSpecificationToUnit = (
     return Unit.derivedUnitWithSymbol(
       symbol,
       numerator.map((s) => unitSpecificationToUnit(s, unitMap)),
-      denominator.map((s) => unitSpecificationToUnit(s, unitMap))
+      denominator.map((s) => unitSpecificationToUnit(s, unitMap)),
     );
   }
   throw new Error('unrecognized specification');

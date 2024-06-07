@@ -1,6 +1,6 @@
 export const getLocalizedQuantityName = (
   name: string,
-  t: (key: string, values?: { [key: string]: string }) => string
+  t: (key: string, values?: { [key: string]: string }) => string,
 ): string =>
   name.startsWith('!')
     ? t('main:quantityCustom', { name: name.slice(1) })

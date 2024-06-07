@@ -27,7 +27,7 @@ const CUSTOM_QUANTITY_GROUP = {
 
 const mapQuantity = (
   quantity: Quantity,
-  group: QuantityGroup
+  group: QuantityGroup,
 ): QuantityOption => ({
   name: quantity.name,
   quantity,
@@ -55,18 +55,18 @@ const QuantityPicker = ({
   const quantityList: QuantityOption[] = quantityGroups
     .map((quantityGroup) =>
       quantityGroup.quantities.map((quantity) =>
-        mapQuantity(quantity, quantityGroup)
-      )
+        mapQuantity(quantity, quantityGroup),
+      ),
     )
     .flat();
   const quantityTable = Object.fromEntries(
     quantityGroups
       .map((quantityGroup) => quantityGroup.quantities)
       .flat()
-      .map((quantity) => [quantity.name, quantity])
+      .map((quantity) => [quantity.name, quantity]),
   );
   const quantityOptionTable = Object.fromEntries(
-    quantityList.map((quantityOption) => [quantityOption.name, quantityOption])
+    quantityList.map((quantityOption) => [quantityOption.name, quantityOption]),
   );
   const hasGroups =
     quantityGroups.find((quantityGroup) => !quantityGroup.label) == null;

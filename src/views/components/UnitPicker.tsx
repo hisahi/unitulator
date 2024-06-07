@@ -37,7 +37,7 @@ interface UnitOption {
 }
 
 const getLocalizedUnitNameOrNull = (
-  name: string | null | undefined
+  name: string | null | undefined,
 ): string | null => (!name ? null : getLocalizedUnitName(name));
 
 const UnitPicker = ({
@@ -65,10 +65,10 @@ const UnitPicker = ({
     unitGroups
       .map((unitGroup) => unitGroup.units)
       .flat()
-      .map((unit) => [unit.name, unit])
+      .map((unit) => [unit.name, unit]),
   );
   const unitOptionTable = Object.fromEntries(
-    unitList.map((unitOption) => [unitOption.name, unitOption])
+    unitList.map((unitOption) => [unitOption.name, unitOption]),
   );
   const hasGroups = unitGroups.find((unitGroup) => !unitGroup.label) == null;
 
@@ -82,7 +82,7 @@ const UnitPicker = ({
     options.filter(
       (option) =>
         option.custom ||
-        caseFold(optionToString(option)).includes(caseFold(state.inputValue))
+        caseFold(optionToString(option)).includes(caseFold(state.inputValue)),
     );
 
   const updateSelectValue = (v: UnitOption | null) => {

@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import Action from '../types/action';
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
 export enum UnitulatorMode {
   Difference,
@@ -18,18 +18,21 @@ const defaults: ModeState = {
   mode: UnitulatorMode.Difference,
 };
 
-const MODE_CHANGE = 'MODE_CHANGE';
+export const modeSlice = createSlice({
+  name: 'mode',
+  initialState: defaults,
+  reducers: {
+    changeMode: (
+      _: ModeState,
+      action: PayloadAction<UnitulatorMode>,
+    ): ModeState => ({ mode: action.payload }),
+  },
+  selectors: {
+    selectMode: (state: ModeState): UnitulatorMode => state.mode,
+  },
+});
 
-export const modeSelector = (state: any): ModeState => state.mode;
-export const changeMode = (
-  newMode: UnitulatorMode
-): Action<string, UnitulatorMode> => ({ type: MODE_CHANGE, payload: newMode });
-
-export default function mode(state = defaults, action: Action<string, any>) {
-  switch (action.type) {
-    case MODE_CHANGE:
-      return { ...state, mode: action.payload };
-    default:
-      return state;
-  }
-}
+export const { changeMode } = modeSlice.actions;
+export const { selectMode } = modeSlice.selectors;
+export const modeSelector = (state: any) => state.mode;
+export default modeSlice.reducer;

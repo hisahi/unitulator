@@ -58,7 +58,7 @@ PREFIXES.forEach((prefix) => {
   const inverse = PREFIXES.find(
     (candidate) =>
       candidate.factor.numerator === prefix.factor.denominator &&
-      candidate.factor.denominator === prefix.factor.numerator
+      candidate.factor.denominator === prefix.factor.numerator,
   );
   if (inverse != null) INVERSE_PREFIX[prefix.name] = inverse.name;
 

@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import Action from '../types/action';
+import { createSlice } from '@reduxjs/toolkit';
 
 export interface MenuState {
   open: boolean;
@@ -9,20 +9,19 @@ const defaults: MenuState = {
   open: false,
 };
 
-const OPEN_MENU = 'OPEN_MENU';
-const CLOSE_MENU = 'CLOSE_MENU';
+export const menuSlice = createSlice({
+  name: 'menu',
+  initialState: defaults,
+  reducers: {
+    openMenu: (): MenuState => ({ open: true }),
+    closeMenu: (): MenuState => ({ open: false }),
+  },
+  selectors: {
+    selectIsMenuOpen: (state: MenuState): boolean => state.open,
+  },
+});
 
-export const menuSelector = (state: any): MenuState => state.menu;
-export const openMenu = (): Action<string, void> => ({ type: OPEN_MENU });
-export const closeMenu = (): Action<string, void> => ({ type: CLOSE_MENU });
-
-export default function menu(state = defaults, action: Action<string, any>) {
-  switch (action.type) {
-    case OPEN_MENU:
-      return { ...state, open: true };
-    case CLOSE_MENU:
-      return { ...state, open: false };
-    default:
-      return state;
-  }
-}
+export const { openMenu, closeMenu } = menuSlice.actions;
+export const { selectIsMenuOpen } = menuSlice.selectors;
+export const menuSelector = (state: any) => state.menu;
+export default menuSlice.reducer;

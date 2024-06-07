@@ -150,12 +150,12 @@ export const SCALAR_QUANTITY = QUANTITY.scalar;
 SCALAR_QUANTITY.construction = { numerators: [], denominators: [] };
 
 const QUANTITY_KEYS = Object.fromEntries(
-  QUANTITIES.map((quantity) => [quantitySearchKey(quantity), quantity])
+  QUANTITIES.map((quantity) => [quantitySearchKey(quantity), quantity]),
 );
 
 export const makeQuantity = (
   numerator: Quantity[],
-  denominator: Quantity[]
+  denominator: Quantity[],
 ): Quantity => {
   const numerator_names = [
     ...numerator
@@ -184,7 +184,7 @@ export const makeQuantity = (
     denominator_names.sort();
     if (!name) name = '1';
     name = `${name}/${parenthesize(
-      makeNeatProductFromSortedTerms(denominator_names)
+      makeNeatProductFromSortedTerms(denominator_names),
     )}`;
   }
 

@@ -32,7 +32,7 @@ const U = (
   symbol: string,
   name: string,
   numerators: Unit[],
-  denominators: Unit[]
+  denominators: Unit[],
 ) =>
   Unit.derivedUnitWithName(symbol, name, numerators, denominators, undefined);
 const X = (
@@ -40,14 +40,14 @@ const X = (
   name: string,
   quantity: string,
   numerators: Unit[],
-  denominators: Unit[]
+  denominators: Unit[],
 ): Unit =>
   Unit.derivedUnitWithNameAndQuantity(
     symbol,
     name,
     QUANTITY[quantity],
     numerators,
-    denominators
+    denominators,
   );
 
 /* eslint-disable */ 
@@ -103,7 +103,7 @@ for (const scaledUnit_ of scaledUnits) {
     scaledUnit.symbol,
     unitSpecificationToUnit(scaledUnit.baseUnit, UNIT),
     fraction,
-    scaleFactor
+    scaleFactor,
   );
   UNITS.push(newUnit);
   UNIT[newUnit.name] = newUnit;

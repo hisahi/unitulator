@@ -47,11 +47,11 @@ const mapPrefix = (prefix: Prefix): PrefixOption => ({
 
 const prefixList: PrefixOption[] = [
   ...PREFIXES.filter(
-    (prefix) => prefix.factor.numerator > prefix.factor.denominator
+    (prefix) => prefix.factor.numerator > prefix.factor.denominator,
   ).map(mapPrefix),
   EMPTY_PREFIX,
   ...PREFIXES.filter(
-    (prefix) => prefix.factor.numerator < prefix.factor.denominator
+    (prefix) => prefix.factor.numerator < prefix.factor.denominator,
   ).map(mapPrefix),
 ];
 
@@ -62,8 +62,8 @@ const unitGroups: UnitGroup[] = Object.keys(BASE_UNITS).map((quantityName) => ({
 unitGroups.sort((a, b) => a.label.localeCompare(b.label));
 unitGroups.forEach((group) =>
   group.units.sort((a, b) =>
-    getLocalizedUnitName(a.name).localeCompare(getLocalizedUnitName(b.name))
-  )
+    getLocalizedUnitName(a.name).localeCompare(getLocalizedUnitName(b.name)),
+  ),
 );
 
 const CustomUnitDialog = ({
@@ -82,7 +82,7 @@ const CustomUnitDialog = ({
   const { t } = useTranslation();
   const [unit, setUnit] = useState(defaultUnit ?? SCALAR_UNIT);
   const [prefixValue, setPrefixValue] = useState<PrefixOption | null>(
-    EMPTY_PREFIX
+    EMPTY_PREFIX,
   );
   const [partUnit, setPartUnit] = useState<Unit | null>(null);
   const [powerValue, setPowerValue] = useState<number>(1);

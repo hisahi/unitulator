@@ -41,13 +41,13 @@ export const shallowCopy = <T extends object>(value: T): T => ({ ...value });
 // TODO fix. this may very well be broken
 export const caseFold = (
   text: string,
-  locales?: string[] | undefined
+  locales?: string[] | undefined,
 ): string => text.toLocaleLowerCase(locales);
 
 export const residualSplit = (
   text: string,
   separator: string,
-  maxSplit: number | undefined
+  maxSplit: number | undefined,
 ): string[] => {
   const split = text.split(separator);
   if (maxSplit === undefined) return split;

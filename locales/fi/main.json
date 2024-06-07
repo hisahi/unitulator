@@ -78,7 +78,7 @@
   "help.title": "Ohje",
   "help.description": "Unitulator on yksikköjen muuntamiseen käytettävä sovellus.",
 
-  "help.modes": "Siinä on useampi eri tila:",
+  "help.modes": "Tiloja on käytettävissä useampi:",
   "help.modes.mode": "Tila",
   "help.modes.description": "Kuvaus",
 
@@ -90,5 +90,5 @@
   "help.mode.additive.description": "Tässä tilassa voi määrittää useamman syöte- ja tulosyksikön. Syötteet lasketaan yhteen ja tulokset porrastetaan. Tämän tilan avulla voi esimerkiksi muuntaa jalat ja tuumat metreiksi ja senttimetreiksi, tai päinvastoin.",
   "help.mode.absolute.description": "Muuntaa varsinaisia arvoja. Lämpötilat ovat merkittävin käyttötapaus: esimerkiksi 41 Fahrenheit-asteesta tulee 5 Celsius-astetta.",
 
-  "help.customize": "Voit myös määrittää omia suureita. Yksiköitä voi määrittää itse muiden yksiköiden tuloina ja osamäärinä. Pian mahdollisesti yksiköitä voi myös määrittää vakiokertoimin muista yksiöistä."
+  "help.customize": "Voit myös määrittää omia suureita. Yksiköitä voi määrittää itse muiden yksiköiden tuloina ja osamäärinä. Pian mahdollisesti yksiköitä voi myös määrittää vakiokertoimin muista yksiköistä."
 }

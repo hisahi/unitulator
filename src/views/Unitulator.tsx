@@ -1,22 +1,22 @@
 import React from 'react';
 import './Unitulator.css';
 import { Box, Container } from '@mui/material';
-import { useSelector } from 'react-redux';
 import TopBar from './components/TopBar';
 import SideBar from './components/SideBar';
-import { UnitulatorMode, modeSelector } from '../states/mode';
+import { UnitulatorMode, selectMode } from '../states/mode';
 import ModeDifference from './modes/Difference';
 import ModeAdditive from './modes/Additive';
 import ModeAbsolute from './modes/Absolute';
 import ModeLogarithm from './modes/Logarithm';
 import ModePercent from './modes/Percent';
 import ModeHelp from './modes/Help';
+import { useAppSelector } from '../states/hooks';
 
 const Unitulator = () => {
-  const modeState = useSelector(modeSelector);
+  const mode = useAppSelector(selectMode);
 
   const displayMode = () => {
-    switch (modeState.mode) {
+    switch (mode) {
       case UnitulatorMode.Difference:
         return <ModeDifference />;
       case UnitulatorMode.Additive:

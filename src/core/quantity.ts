@@ -27,7 +27,7 @@ const baseQuantityToChar = (quantity: BaseQuantity): string =>
     [BaseQuantity.LuminousIntensity]: 'c',
     [BaseQuantity.PlaneAngle]: 'r',
     [BaseQuantity.SolidAngle]: 'S',
-  }[quantity]);
+  })[quantity];
 
 // for quantity -> string conversion
 const baseQuantityFromChar = (key: string): BaseQuantity | undefined =>
@@ -41,12 +41,12 @@ const baseQuantityFromChar = (key: string): BaseQuantity | undefined =>
     c: BaseQuantity.LuminousIntensity,
     r: BaseQuantity.PlaneAngle,
     S: BaseQuantity.SolidAngle,
-  }[key]);
+  })[key];
 
 // reduces a "fraction" of quantities by sorting and removing entries in both
 const reduceQuantityFraction = (
   numerator: BaseQuantity[],
-  denominator: BaseQuantity[]
+  denominator: BaseQuantity[],
 ): void => {
   for (
     let numeratorIndex = 0, denominatorIndex = 0;
@@ -93,7 +93,7 @@ const mergePowers = (tokens: QuantityLiteral[]): QuantityLiteral[] => {
 
 const cancelPowers = (
   numerators: QuantityLiteral[],
-  denominators: QuantityLiteral[]
+  denominators: QuantityLiteral[],
 ) => {
   // cancel out units from both sides (including in powers)
   const numeratorsByName: { [name: string]: Array<[number, QuantityLiteral]> } =
@@ -144,7 +144,7 @@ export class Quantity {
     public name: string,
     public numerator: BaseQuantity[],
     public denominator: BaseQuantity[],
-    public construction: QuantityConstruction
+    public construction: QuantityConstruction,
   ) {
     this.numerator.sort();
     this.denominator.sort();
@@ -154,7 +154,7 @@ export class Quantity {
   // quantity that is a product of integer powers of quantities
   static productQuantity(
     name: string,
-    derivation: Array<[BaseQuantity, number]>
+    derivation: Array<[BaseQuantity, number]>,
   ): Quantity {
     const numerator: BaseQuantity[] = [];
     const denominator: BaseQuantity[] = [];
@@ -185,7 +185,7 @@ export class Quantity {
   static derivedQuantity(
     name: string,
     numerators: Quantity[],
-    denominators: Quantity[]
+    denominators: Quantity[],
   ) {
     let numerator: BaseQuantity[] = [];
     let denominator: BaseQuantity[] = [];
@@ -209,7 +209,7 @@ export class Quantity {
     name: string,
     quantity: Quantity,
     numerators: Quantity[],
-    denominators: Quantity[]
+    denominators: Quantity[],
   ) {
     const numeratorTokens: QuantityLiteral[] = mergePowers([
       ...(quantity.construction.numerators || []),
@@ -234,7 +234,7 @@ export class Quantity {
         ...numerators.map((q) => q.denominator).flat(),
         ...denominators.map((q) => q.numerator).flat(),
       ],
-      { numerators: numeratorTokens, denominators: denominatorTokens }
+      { numerators: numeratorTokens, denominators: denominatorTokens },
     );
   }
 }
@@ -248,7 +248,7 @@ export const quantitySearchKey = (quantity: Quantity): string =>
 // converts key back to quantity
 export const parseQuantityFromKey = (
   name: string,
-  key: string
+  key: string,
 ): Quantity | null => {
   const numerators: BaseQuantity[] = [];
   const denominators: BaseQuantity[] = [];
@@ -295,7 +295,7 @@ export const quantityConstructionToFormula = (quantity: Quantity): string => {
   if (denominators.length > 0) {
     result = result || '1';
     result += ` / ${maybeParenthesize(
-      denominators.map(quantityLiteralToFormula).join(' * ')
+      denominators.map(quantityLiteralToFormula).join(' * '),
     )}`;
   }
 

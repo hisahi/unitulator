@@ -46,15 +46,14 @@ const Simple = ({ absolute }: { absolute: boolean }) => {
     quantities: group.quantities.filter(
       (quantity) =>
         !absolute ||
-        getUnitsForQuantity(quantity).filter(unitHasZeroPoint).length > 0
+        getUnitsForQuantity(quantity).filter(unitHasZeroPoint).length > 0,
     ),
   }));
 
   const { t } = useTranslation();
   const [quantity, setQuantity] = useState<QuantitySelection | null>(null);
-  const [inputUnits, setInputUnits] = useState<UnitsAndSelectedUnit>(
-    emptySelection()
-  );
+  const [inputUnits, setInputUnits] =
+    useState<UnitsAndSelectedUnit>(emptySelection());
   const [outputUnits, setOutputUnits] = useState<UnitsAndSelectedUnit[]>([
     emptySelection(),
   ]);
@@ -86,7 +85,7 @@ const Simple = ({ absolute }: { absolute: boolean }) => {
     quantity: Quantity | null,
     fromUnit: Unit | null,
     toUnit: Unit | null,
-    value: number
+    value: number,
   ): number | undefined => {
     if (
       quantity == null ||
@@ -124,7 +123,7 @@ const Simple = ({ absolute }: { absolute: boolean }) => {
           quantity?.quantity ?? null,
           getCurrentUnit(inputUnits),
           outputUnit,
-          inputValue
+          inputValue,
         );
 
   const getFormattedOutputValue = (outputUnit: Unit | null): string => {
@@ -135,7 +134,7 @@ const Simple = ({ absolute }: { absolute: boolean }) => {
       significance,
       true,
       getCurrentUnit(inputUnits)!,
-      outputUnit!
+      outputUnit!,
     );
   };
 
@@ -153,7 +152,7 @@ const Simple = ({ absolute }: { absolute: boolean }) => {
         significance,
         false,
         getCurrentUnit(inputUnits)!,
-        getCurrentUnit(newInput)!
+        getCurrentUnit(newInput)!,
       );
       updateInputValue(formatted, value);
     }

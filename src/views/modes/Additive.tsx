@@ -66,7 +66,7 @@ const inputToOutput = (input: UnitInputValue): UnitOutputValue => ({
 const outputToInput = (
   output: UnitOutputValue,
   significance: Significance | null,
-  text: string
+  text: string,
 ): UnitInputValue => ({
   units: output.units,
   current: output.current,
@@ -97,7 +97,7 @@ const Additive = () => {
     refilterUnits(newInputs);
     newInputs.sort(
       (a, b) =>
-        getUnitScaleSafe(b.current?.unit) - getUnitScaleSafe(a.current?.unit)
+        getUnitScaleSafe(b.current?.unit) - getUnitScaleSafe(a.current?.unit),
     );
     setInputUnits(newInputs);
     setOutputUnits(recalculate(newInputs, outputUnits));
@@ -109,7 +109,7 @@ const Additive = () => {
     refilterUnits(newOutputs);
     newOutputs.sort(
       (a, b) =>
-        getUnitScaleSafe(b.current?.unit) - getUnitScaleSafe(a.current?.unit)
+        getUnitScaleSafe(b.current?.unit) - getUnitScaleSafe(a.current?.unit),
     );
     setOutputUnits(recalculate(inputUnits, newOutputs));
   };
@@ -121,16 +121,16 @@ const Additive = () => {
       const selectedBy = Object.fromEntries(
         selections
           .map(
-            (value, index) => [index, value] as [number, UnitsAndSelectedUnit]
+            (value, index) => [index, value] as [number, UnitsAndSelectedUnit],
           )
           .filter(([, value]) => value.current?.unit)
-          .map(([index, value]) => [value.current!.unit.name, index])
+          .map(([index, value]) => [value.current!.unit.name, index]),
       );
       selections.forEach((selection, index) => {
         selection.units = units.map((group) => ({
           ...group,
           units: group.units.filter((unit) =>
-            [undefined, index].includes(selectedBy[unit.name])
+            [undefined, index].includes(selectedBy[unit.name]),
           ),
         }));
       });
@@ -145,7 +145,7 @@ const Additive = () => {
       selections
         .map((value, index) => [index, value] as [number, UnitsAndSelectedUnit])
         .filter(([, value]) => value.current?.unit)
-        .map(([, value]) => [value.current!.unit.name, true])
+        .map(([, value]) => [value.current!.unit.name, true]),
     );
     return units.map((group) => ({
       ...group,
@@ -167,24 +167,25 @@ const Additive = () => {
     const units = quantity?.quantity ? getUnitGroups(quantity.quantity) : [];
     setInputUnits(inputUnits.map((x) => ({ ...x, units, current: null })));
     setOutputUnits(
-      outputUnits.map((x) => ({ ...x, units, current: null, value: null }))
+      outputUnits.map((x) => ({ ...x, units, current: null, value: null })),
     );
   };
 
   const recalculate = (
     inputs: UnitInputValue[],
-    outputs: UnitOutputValue[]
+    outputs: UnitOutputValue[],
   ): UnitOutputValue[] => {
     const filteredInputs = inputs.filter(
-      (selection) => selection.current?.unit != null && selection.value !== null
+      (selection) =>
+        selection.current?.unit != null && selection.value !== null,
     );
     const filteredOutputs = outputs.filter(
-      (selection) => selection.current?.unit
+      (selection) => selection.current?.unit,
     );
     const result = doAdditiveConversion(
       filteredInputs.map((input) => input.current!.unit),
       filteredOutputs.map((output) => output.current!.unit),
-      filteredInputs.map((input) => input.value!)
+      filteredInputs.map((input) => input.value!),
     );
     outputs.forEach((output) => (output.value = null));
     filteredOutputs.forEach((output, index) => (output.value = result[index]));
@@ -194,7 +195,7 @@ const Additive = () => {
   const updateInputValue = (
     index: number,
     text: string,
-    value: number | undefined
+    value: number | undefined,
   ) => {
     const newInputs = [...inputUnits];
     newInputs[index] = { ...newInputs[index], text };
@@ -208,8 +209,8 @@ const Additive = () => {
         maximumSignificance(
           newInputs
             .map((value) => value.significance)
-            .filter((x) => x) as Significance[]
-        )
+            .filter((x) => x) as Significance[],
+        ),
       );
     }
     setInputUnits(newInputs);
@@ -227,8 +228,8 @@ const Additive = () => {
       maximumSignificance(
         newInputs
           .map((value) => value.significance)
-          .filter((x) => x) as Significance[]
-      )
+          .filter((x) => x) as Significance[],
+      ),
     );
     setOutputUnits(recalculate(newInputs, [...outputUnits]));
   };
@@ -244,7 +245,7 @@ const Additive = () => {
 
   const getFormattedOutputValue = (
     outputValue: UnitOutputValue,
-    useLocale: boolean
+    useLocale: boolean,
   ): string => {
     const number = outputValue.value;
     const inputUnit = getInputUnitForSignificance();
@@ -255,7 +256,7 @@ const Additive = () => {
       significance,
       useLocale,
       inputUnit,
-      outputUnit
+      outputUnit,
     );
   };
 
@@ -264,8 +265,8 @@ const Additive = () => {
       outputToInput(
         output,
         significance,
-        getFormattedOutputValue(output, false)
-      )
+        getFormattedOutputValue(output, false),
+      ),
     );
     const newOutputs = inputUnits.map(inputToOutput);
     setInputUnits(newInputs);
@@ -273,8 +274,8 @@ const Additive = () => {
       maximumSignificance(
         newInputs
           .map((value) => value.significance)
-          .filter((x) => x) as Significance[]
-      )
+          .filter((x) => x) as Significance[],
+      ),
     );
     setOutputUnits(recalculate(newInputs, newOutputs));
   };

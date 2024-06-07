@@ -21,7 +21,7 @@ const bigintAbs = (number: bigint): bigint => (number < 0 ? -number : number);
 // bigint, bigint -> bigint/bigint fraction
 export const makeFraction = (
   numerator: bigint,
-  denominator: bigint
+  denominator: bigint,
 ): Fraction => {
   if (!denominator) {
     throw new Error('denominator cannot be zero');
@@ -120,7 +120,7 @@ const productNumber = (numbers: number[]): number =>
 
 export const divideScales = (
   numerators: number[],
-  denominators: number[]
+  denominators: number[],
 ): number =>
   // what about when we're dealing with large numbers?
   productNumber(numerators) / productNumber(denominators);
